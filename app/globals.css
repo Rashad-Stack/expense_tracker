@@ -66,6 +66,8 @@
   }
 }
 
+/* ========================================== TAILWIND STYLES */
+
 @layer base {
   * {
     @apply border-border;
@@ -79,7 +81,20 @@
   h4,
   h5,
   h6,
-  button {
+  button,
+  a,
+  input {
     @apply font-armata;
+  }
+}
+
+@layer utilities {
+  .wrapper {
+    @apply w-full max-w-7xl max-xl:px-2 lg:mx-auto;
+  }
+
+  /* SHADCN OVERRIDES */
+  .select-field {
+    @apply w-48 border-none py-3 text-gray-500 focus:ring-transparent focus-visible:ring-transparent !important;
   }
 }
