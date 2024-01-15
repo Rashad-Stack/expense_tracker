@@ -4,7 +4,7 @@ import { HiArrowLongRight } from "react-icons/hi2";
 export default function CategoryCard() {
   return (
     <Link
-      href="/"
+      href="/categories/1"
       className="group flex w-full items-center rounded-md bg-primary px-8 py-4 text-primary-foreground hover:bg-primary/90"
     >
       <div className="flex h-full w-16 items-center">
