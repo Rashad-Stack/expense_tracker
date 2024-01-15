@@ -1,6 +1,7 @@
+import DeleteCategory from "@/components/shared/DeleteCategory";
 import Paginate from "@/components/shared/Paginate";
 import TransactionCard from "@/components/shared/TransactionCard";
-import { Button } from "@/components/ui/button";
+import UpdateCategory from "@/components/shared/UpdateCategory";
 
 export default function CategoryDetailsPage() {
   return (
@@ -10,11 +11,9 @@ export default function CategoryDetailsPage() {
           <h2 className="text-lg font-bold">Book Shop Book</h2>
           <h1 className="text-2xl font-bold">$3300.00</h1>
         </div>
-        <div>
-          <Button className="mr-2">Update</Button>
-          <Button variant="destructive" className="mr-2">
-            Delete
-          </Button>
+        <div className="w-48 space-y-4">
+          <UpdateCategory />
+          <DeleteCategory />
         </div>
       </div>
       <div className="space-y-4">
