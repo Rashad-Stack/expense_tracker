@@ -13,7 +13,7 @@ export default function RootLayout({
     <div className="wrapper grid min-h-screen grid-rows-[auto_1fr] gap-2 md:grid-cols-[auto_1fr] lg:grid-cols-[auto_1fr_auto]">
       <Header />
       <Menubar />
-      <main className="space-y-8 max-lg:col-span-2 max-md:col-span-3">
+      <main className="space-y-8 py-4 max-lg:col-span-2 max-md:col-span-3">
         <section className="flex flex-wrap items-center justify-between gap-4">
           <Search />
           <CategoryFilter />

@@ -3,7 +3,7 @@ import Link from "next/link";
 export default function TransactionCard() {
   return (
     <Link href="/">
-      <div className="flex flex-col gap-2">
+      <div className="flex flex-col gap-2 rounded-md px-2 py-2 transition-all hover:bg-slate-100">
         <div className="flex justify-between">
           <div className="flex gap-2">
             <div className="flex h-10 w-10 items-center justify-center rounded-md bg-primary">
