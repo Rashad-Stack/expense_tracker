@@ -6,7 +6,7 @@ export default function Sidebar() {
   return (
     <aside className="space-y-8 p-4 max-lg:hidden">
       <div className="flex flex-col items-center space-y-2 rounded-md bg-slate-100 p-4">
-        <UserButton />
+        <UserButton afterSignOutUrl="/" />
         <h2 className="text-sm font-semibold">Welcome Rashad</h2>
       </div>
       <div className="flex flex-col gap-4">

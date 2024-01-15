@@ -12,7 +12,6 @@ import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { HiBars3CenterLeft } from "react-icons/hi2";
-import { Button } from "../ui/button";
 
 export default function MobileMenu() {
   const pathName = usePathname();
@@ -20,7 +19,7 @@ export default function MobileMenu() {
     <nav className="md:hidden">
       <Sheet>
         <SheetTrigger>
-          <HiBars3CenterLeft className="h-12 w-12" />
+          <HiBars3CenterLeft className="h-10 w-10" />
         </SheetTrigger>
         <SheetContent side="left">
           <SheetFooter className="flex flex-col gap-4">
@@ -48,11 +47,6 @@ export default function MobileMenu() {
               );
             })}
           </SheetFooter>
-          <SheetClose asChild>
-            <Button size="lg" className="mt-4 w-full">
-              <Link href="/">Logout</Link>
-            </Button>
-          </SheetClose>
         </SheetContent>
       </Sheet>
     </nav>

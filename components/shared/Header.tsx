@@ -1,3 +1,4 @@
+import { SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
 import Image from "next/image";
 import Link from "next/link";
 import { Button } from "../ui/button";
@@ -16,11 +17,15 @@ export default function Header() {
           />
         </Link>
         <div className="flex w-32 items-center justify-end gap-3">
-          <Button asChild size="lg">
-            <Link href="/sign-in">Login</Link>
-          </Button>
-
-          {false && <MobileMenu />}
+          <SignedIn>
+            <UserButton afterSignOutUrl="/" />
+            <MobileMenu />
+          </SignedIn>
+          <SignedOut>
+            <Button size="lg">
+              <Link href="/sign-in">Login</Link>
+            </Button>
+          </SignedOut>
         </div>
       </div>
     </header>
