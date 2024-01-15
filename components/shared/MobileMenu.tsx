@@ -17,7 +17,7 @@ import { Button } from "../ui/button";
 export default function MobileMenu() {
   const pathName = usePathname();
   return (
-    <nav>
+    <nav className="md:hidden">
       <Sheet>
         <SheetTrigger>
           <HiBars3CenterLeft className="h-12 w-12" />
