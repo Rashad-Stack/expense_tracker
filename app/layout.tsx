@@ -1,4 +1,5 @@
 import { Toaster } from "@/components/ui/sonner";
+import { ClerkProvider } from "@clerk/nextjs";
 import type { Metadata } from "next";
 import { Armata, Inter } from "next/font/google";
 import "./globals.css";
@@ -29,11 +30,13 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
-      <body className={`${armata.variable} ${inter.variable}`}>
-        {children}
-        <Toaster />
-      </body>
-    </html>
+    <ClerkProvider>
+      <html lang="en">
+        <body className={`${armata.variable} ${inter.variable}`}>
+          {children}
+          <Toaster />
+        </body>
+      </html>
+    </ClerkProvider>
   );
 }

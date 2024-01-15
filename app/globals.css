@@ -13,11 +13,11 @@
     --popover: 0 0% 100%;
     --popover-foreground: 222.2 84% 4.9%;
 
-    --primary: 222.2 47.4% 11.2%;
+    --primary: 210.5 100% 12.4%;
     --primary-foreground: 210 40% 98%;
 
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
+    --secondary: 210.5 100% 12.4%;
+    --secondary-foreground: 210 40% 98%;
 
     --muted: 210 40% 96.1%;
     --muted-foreground: 215.4 16.3% 46.9%;
@@ -73,7 +73,7 @@
     @apply border-border;
   }
   body {
-    @apply font-inter bg-background text-foreground;
+    @apply bg-background font-inter text-foreground;
   }
   h1,
   h2,

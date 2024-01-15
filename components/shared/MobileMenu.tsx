@@ -25,7 +25,7 @@ export default function MobileMenu() {
         <SheetContent side="left">
           <SheetFooter className="flex flex-col gap-4">
             <SheetClose asChild>
-              <Link href="/sign-in" className="text-sm">
+              <Link href="/dashboard" className="text-sm">
                 <Image
                   src="/assets/svg/logo-no-background.svg"
                   alt="logo"
