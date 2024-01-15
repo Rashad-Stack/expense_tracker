@@ -5,7 +5,7 @@ export default function CategoryCard() {
   return (
     <Link
       href="/"
-      className="group flex w-full items-center rounded-md bg-primary px-8 py-4 text-primary-foreground hover:bg-primary/90 sm:max-w-xs"
+      className="group flex w-full items-center rounded-md bg-primary px-8 py-4 text-primary-foreground hover:bg-primary/90"
     >
       <div className="flex h-full w-16 items-center">
         <h1 className="text-center text-4xl font-bold uppercase">B</h1>

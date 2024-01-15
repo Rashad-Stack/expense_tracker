@@ -10,7 +10,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <div className="wrapper grid min-h-screen grid-rows-[auto_1fr] gap-2 md:grid-cols-[auto_1fr] lg:grid-cols-[auto_1fr_auto]">
+    <div className="wrapper grid min-h-screen grid-rows-[auto_1fr] gap-x-8 gap-y-2 md:grid-cols-[auto_1fr] lg:grid-cols-[auto_1fr_auto]">
       <Header />
       <Menubar />
       <main className="space-y-8 py-4 max-lg:col-span-2 max-md:col-span-3">
