@@ -1,5 +1,7 @@
 import AddNewCategory from "@/components/shared/AddNewCategory";
 import CategoryCard from "@/components/shared/CategoryCard";
+import TransactionCard from "@/components/shared/TransactionCard";
+import Link from "next/link";
 
 export default function Home() {
   return (
@@ -21,9 +23,20 @@ export default function Home() {
       </section>
 
       <section className="grid grid-rows-[auto_1fr] gap-5">
-        <div>
+        <div className="space-y-4">
+          <h1 className="text-lg font-bold">Transactions</h1>
           <div className="flex justify-between">
-            <h1 className="text-lg font-bold">Transactions</h1>
+            <h2 className="text-base font-bold">Today</h2>
+            <Link href="/" className="text-sm">
+              View all
+            </Link>
+          </div>
+          <div className="flex flex-col gap-4">
+            <TransactionCard />
+            <TransactionCard />
+            <TransactionCard />
+            <TransactionCard />
+            <TransactionCard />
           </div>
         </div>
       </section>
