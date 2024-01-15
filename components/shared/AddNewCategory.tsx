@@ -10,6 +10,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
+import { clientError } from "@/lib/utils";
 import axios from "axios";
 import { startTransition, useState } from "react";
 import { HiMiniPlus } from "react-icons/hi2";
@@ -26,13 +27,11 @@ export default function AddNewCategory() {
       return;
     }
 
-    axios
-      .post("/api/categories", { name: newCategory })
-      .then(() => toast.success("New category added!"))
-      .catch((error) => {
-        console.error(error.response);
-        toast.error("Failed to add category");
-      });
+    toast.promise(axios.post("/api/categories", { name: newCategory }), {
+      loading: "Wait a moment",
+      success: (data) => `Successfully saved ${data.data.name}`,
+      error: (error) => clientError(error.response.data),
+    });
   }
 
   return (

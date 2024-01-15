@@ -14,7 +14,7 @@ export async function POST(request: NextRequest) {
 
   if (!userId) {
     return NextResponse.json(
-      { error: "Unauthorized" },
+      { name: "custom", message: "Unauthorized" },
       {
         status: statusCodes.UNAUTHORIZED,
       },
@@ -25,7 +25,7 @@ export async function POST(request: NextRequest) {
   const validation = categorySchema.safeParse(body);
 
   if (!validation.success) {
-    return NextResponse.json(validation.error.errors, {
+    return NextResponse.json(validation.error, {
       status: statusCodes.BAD_REQUEST,
     });
   }
