@@ -15,25 +15,69 @@ import { HiMiniPlus } from "react-icons/hi2";
 import { toast } from "sonner";
 import { Button } from "../ui/button";
 import { Input } from "../ui/input";
+import CategorySelector from "./CategorySelector";
+import DatePicker from "./DatePicker";
+
+const initialState = {
+  title: "",
+  date: "",
+  amount: "",
+  categoryId: "",
+};
 
 export default function AddNewTransaction() {
-  const [category, setCategory] = useState("");
+  const [newTransaction, setTransaction] = useState(initialState);
+  const { title, date, amount, categoryId } = newTransaction;
+
+  function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
+    setTransaction({
+      ...newTransaction,
+      [e.target.name]: e.target.value,
+    });
+  }
 
   function handleCreate() {
-    if (!category) return toast.error("Please enter a category name");
+    // if (!date || !amount || !categoryId || !title)
+    //   return toast.error("Please fill all fields");
+
+    console.log(newTransaction);
+
     toast.success("Transaction added successfully");
   }
+
   return (
     <Dialog>
-      <DialogTrigger className="inline-flex h-10 w-full items-center justify-center whitespace-nowrap rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground ring-offset-background transition-colors hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50">
+      <DialogTrigger className="btn-modal-add">
         <HiMiniPlus className="h-6 w-6" /> <span>Add New Transaction</span>
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>
           <DialogTitle>New Transaction</DialogTitle>
         </DialogHeader>
-        <DialogDescription>
-          <Input />
+        <DialogDescription className="space-y-4">
+          <Input
+            type="text"
+            onChange={handleChange}
+            name="title"
+            className="input-field"
+            placeholder="Enter Title"
+          />
+          <Input
+            type="number"
+            onChange={handleChange}
+            name="amount"
+            className="input-field"
+            placeholder="Enter Amount"
+          />
+
+          <DatePicker
+            newTransaction={newTransaction}
+            setTransaction={setTransaction}
+          />
+          <CategorySelector
+            newTransaction={newTransaction}
+            setTransaction={setTransaction}
+          />
         </DialogDescription>
         <DialogFooter>
           <DialogClose asChild>

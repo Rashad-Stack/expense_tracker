@@ -5,6 +5,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
 
 const transactionSchema = z.object({
+  title: z.string().min(3).max(255),
   date: z.date(),
   amount: z.number(),
   createdAt: z.date().optional(),
