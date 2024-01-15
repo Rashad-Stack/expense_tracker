@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { Button } from "../ui/button";
+import MobileMenu from "./MobileMenu";
 
 export default function Header() {
   return (
@@ -14,10 +15,12 @@ export default function Header() {
             height="50"
           />
         </Link>
-        <div className="flex w-32 justify-end gap-3">
+        <div className="flex w-32 items-center justify-end gap-3">
           <Button asChild size="lg">
             <Link href="/sign-in">Login</Link>
           </Button>
+
+          {true && <MobileMenu />}
         </div>
       </div>
     </header>

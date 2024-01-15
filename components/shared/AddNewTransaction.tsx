@@ -21,7 +21,7 @@ export default function AddNewTransaction() {
 
   function handleCreate() {
     if (!category) return toast.error("Please enter a category name");
-    toast.success("Category created successfully");
+    toast.success("Transaction added successfully");
   }
   return (
     <Dialog>
@@ -30,7 +30,7 @@ export default function AddNewTransaction() {
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>New Expense Category</DialogTitle>
+          <DialogTitle>New Transaction</DialogTitle>
         </DialogHeader>
         <DialogDescription>
           <Input />
