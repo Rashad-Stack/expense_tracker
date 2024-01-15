@@ -20,7 +20,7 @@ export default function Header() {
             <Link href="/sign-in">Login</Link>
           </Button>
 
-          {true && <MobileMenu />}
+          {false && <MobileMenu />}
         </div>
       </div>
     </header>
