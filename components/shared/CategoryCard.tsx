@@ -1,17 +1,25 @@
+import { Category } from "@prisma/client";
 import Link from "next/link";
 import { HiArrowLongRight } from "react-icons/hi2";
 
-export default function CategoryCard() {
+type CategoryCardProps = {
+  category: Category;
+};
+
+export default function CategoryCard({ category }: CategoryCardProps) {
+  const { id, name } = category;
   return (
     <Link
-      href="/categories/1"
+      href={`/categories/${id}`}
       className="group flex w-full items-center rounded-md bg-primary px-8 py-4 text-primary-foreground hover:bg-primary/90"
     >
       <div className="flex h-full w-16 items-center">
-        <h1 className="text-center text-4xl font-bold uppercase">B</h1>
+        <h1 className="text-center text-4xl font-bold uppercase">
+          {name.charAt(0)}
+        </h1>
       </div>
       <div>
-        <h3>Book Shop Book</h3>
+        <h3 className="capitalize">{name}</h3>
         <p>$0.00</p>
       </div>
 

@@ -1,8 +1,19 @@
 import AddNewCategory from "@/components/shared/AddNewCategory";
 import CategoryCard from "@/components/shared/CategoryCard";
 import Paginate from "@/components/shared/Paginate";
+import prisma from "@/prisma/db";
+import { auth } from "@clerk/nextjs";
 
-export default function CategoryPage() {
+export default async function CategoryPage() {
+  const { sessionClaims } = auth();
+  const userId = sessionClaims?.userId as string;
+
+  const categories = await prisma.category.findMany({
+    where: {
+      userId,
+    },
+  });
+
   return (
     <section className="grid grid-rows-[auto_1fr] gap-5">
       <div className="space-y-8">
@@ -14,10 +25,10 @@ export default function CategoryPage() {
         </div>
 
         <div className="grid gap-2 sm:grid-cols-2">
-          <CategoryCard />
-          <CategoryCard />
-          <CategoryCard />
-          <CategoryCard />
+          {categories.length > 0 &&
+            categories.map((category) => (
+              <CategoryCard key={category.id} category={category} />
+            ))}
         </div>
       </div>
       <Paginate />

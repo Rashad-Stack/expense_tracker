@@ -4,8 +4,13 @@ import statusCodes from "http-status-codes";
 import { NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
 
-const categorySchema = z.object({
-  name: z.string().min(1, "Category is required!").max(255),
+const transactionSchema = z.object({
+  date: z.date(),
+  amount: z.number(),
+  createdAt: z.date().optional(),
+  updatedAt: z.date().optional(),
+  categoryId: z.string(),
+  userId: z.string(),
 });
 
 export async function POST(request: NextRequest) {
@@ -23,7 +28,7 @@ export async function POST(request: NextRequest) {
     }
 
     const body = await request.json();
-    const validation = categorySchema.safeParse(body);
+    const validation = transactionSchema.safeParse(body);
 
     if (!validation.success) {
       return NextResponse.json(validation.error, {
@@ -31,40 +36,14 @@ export async function POST(request: NextRequest) {
       });
     }
 
-    const newCategory = await prisma.category.create({
+    const newTransaction = await prisma.transaction.create({
       data: {
         ...validation.data,
-        userId,
       },
     });
 
-    return NextResponse.json(newCategory, {
+    return NextResponse.json(newTransaction, {
       status: statusCodes.CREATED,
     });
-  } catch (error) {
-    throw error;
-  }
-}
-
-export async function Get() {
-  const { sessionClaims } = auth();
-  const userId = sessionClaims?.userId as string;
-
-  try {
-    const allCategoryByUser = await prisma.category.findMany({
-      where: { userId },
-    });
-    console.log("🚀 ~ Get ~ allCategoryByUser:", allCategoryByUser);
-
-    return NextResponse.json(
-      { allCategoryByUser },
-      {
-        status: statusCodes.OK,
-      },
-    );
-  } catch (error) {
-    console.log("🚀 ~ Get ~ error:", error);
-
-    throw error;
-  }
+  } catch (error) {}
 }

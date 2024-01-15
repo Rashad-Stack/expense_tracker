@@ -27,9 +27,6 @@ const handleZodValidationErrors = (error: ZodError): string => {
 };
 
 export const clientError = (error: Error) => {
-  const err = JSON.stringify(error);
-  console.log("Debug: error: ", error, err);
-
   if (error.name === "ZodError") {
     return handleZodValidationErrors(error as ZodError);
   } else if (error.name === "custom") {
