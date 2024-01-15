@@ -6,12 +6,11 @@ import { z } from "zod";
 
 const transactionSchema = z.object({
   title: z.string().min(3).max(255),
-  date: z.date(),
-  amount: z.number(),
+  date: z.string(),
+  amount: z.string(),
   createdAt: z.date().optional(),
   updatedAt: z.date().optional(),
   categoryId: z.string(),
-  userId: z.string(),
 });
 
 export async function POST(request: NextRequest) {
@@ -40,6 +39,8 @@ export async function POST(request: NextRequest) {
     const newTransaction = await prisma.transaction.create({
       data: {
         ...validation.data,
+        userId,
+        amount: Number(validation.data.amount),
       },
     });
 

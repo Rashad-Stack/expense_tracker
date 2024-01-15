@@ -7,7 +7,7 @@ type CategoryCardProps = {
 };
 
 export default function CategoryCard({ category }: CategoryCardProps) {
-  const { id, name } = category;
+  const { id, name } = category || {};
   return (
     <Link
       href={`/categories/${id}`}

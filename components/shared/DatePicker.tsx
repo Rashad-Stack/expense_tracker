@@ -32,13 +32,14 @@ export default function DatePicker({
 }: DatePickerProps) {
   const [date, setDate] = React.useState<Date>();
 
-  React.useEffect(() => {
+  function handelPickDate(date: Date | undefined) {
+    setDate(date);
     setTransaction({
       ...newTransaction,
       date: date?.toISOString(),
     });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [date]);
+    return date;
+  }
 
   return (
     <Popover>
@@ -58,7 +59,7 @@ export default function DatePicker({
         <Calendar
           mode="single"
           selected={date}
-          onSelect={setDate}
+          onSelect={handelPickDate}
           initialFocus
         />
       </PopoverContent>

@@ -10,6 +10,8 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
+import { clientError } from "@/lib/utils";
+import axios from "axios";
 import { useState } from "react";
 import { HiMiniPlus } from "react-icons/hi2";
 import { toast } from "sonner";
@@ -37,12 +39,14 @@ export default function AddNewTransaction() {
   }
 
   function handleCreate() {
-    // if (!date || !amount || !categoryId || !title)
-    //   return toast.error("Please fill all fields");
+    if (!date || !amount || !categoryId || !title)
+      return toast.error("Please fill all fields");
 
-    console.log(newTransaction);
-
-    toast.success("Transaction added successfully");
+    toast.promise(axios.post("/api/transactions", { ...newTransaction }), {
+      loading: "Wait a moment",
+      success: (data) => `Successfully saved ${data.data.name}`,
+      error: (error) => clientError(error.response.data),
+    });
   }
 
   return (
