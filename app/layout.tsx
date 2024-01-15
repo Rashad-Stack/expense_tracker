@@ -1,3 +1,4 @@
+import { Toaster } from "@/components/ui/sonner";
 import type { Metadata } from "next";
 import { Armata, Inter } from "next/font/google";
 import "./globals.css";
@@ -29,7 +30,10 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={`${armata.variable} ${inter.variable}`}>{children}</body>
+      <body className={`${armata.variable} ${inter.variable}`}>
+        {children}
+        <Toaster />
+      </body>
     </html>
   );
 }

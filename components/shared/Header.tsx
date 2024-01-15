@@ -15,7 +15,7 @@ export default function Header() {
           />
         </Link>
         <div className="flex w-32 justify-end gap-3">
-          <Button asChild className="rounded-full" size="lg">
+          <Button asChild size="lg">
             <Link href="/sign-in">Login</Link>
           </Button>
         </div>

@@ -8,9 +8,9 @@ import {
 
 export default function CategoryFilter() {
   return (
-    <div className="border-b">
+    <div className="w-full border-b sm:max-w-[190px]">
       <Select>
-        <SelectTrigger className="select-field border-b">
+        <SelectTrigger className="select-field">
           <SelectValue placeholder="Select Category" />
         </SelectTrigger>
         <SelectContent>

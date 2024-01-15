@@ -95,6 +95,6 @@
 
   /* SHADCN OVERRIDES */
   .select-field {
-    @apply w-48 border-none py-3 text-gray-500 focus:ring-transparent focus-visible:ring-transparent !important;
+    @apply w-full border-none py-3 text-gray-500 focus:ring-transparent focus-visible:ring-transparent !important;
   }
 }
