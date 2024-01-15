@@ -1,10 +1,11 @@
 "use server";
-import { CreateUserParams, UpdateUserParams } from "@/types";
-import { PrismaClient, User } from "@prisma/client";
+import { Prisma, PrismaClient, User } from "@prisma/client";
 import { handleError } from "../utils";
 const prisma = new PrismaClient();
 
-export async function createUser(user: CreateUserParams): Promise<User | void> {
+export async function createUser(
+  user: Prisma.UserCreateInput,
+): Promise<User | void> {
   try {
     return await prisma.user.create({
       data: user,
@@ -15,12 +16,12 @@ export async function createUser(user: CreateUserParams): Promise<User | void> {
 }
 
 export async function updateUser(
-  id: string,
-  user: UpdateUserParams,
+  clerkId: string,
+  user: Prisma.UserUpdateInput,
 ): Promise<User | void> {
   try {
     return await prisma.user.update({
-      where: { id },
+      where: { clerkId },
       data: user,
     });
   } catch (error) {
@@ -28,11 +29,11 @@ export async function updateUser(
   }
 }
 
-export async function deleteUser(id: string): Promise<void> {
+export async function deleteUser(clerkId: string): Promise<void> {
   try {
     // Find user to delete
     const user = await prisma.user.findUnique({
-      where: { id },
+      where: { clerkId },
     });
 
     if (!user) {
