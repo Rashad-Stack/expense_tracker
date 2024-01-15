@@ -97,4 +97,12 @@
   .select-field {
     @apply w-full border-none py-3 text-gray-500 focus:ring-transparent focus-visible:ring-transparent !important;
   }
+
+  .input-field {
+    @apply h-[54px] border-none bg-gray-50 px-4 py-3 placeholder:text-gray-500 focus-visible:ring-transparent focus-visible:ring-offset-0 !important;
+  }
+
+  .btn-modal-add {
+    @apply inline-flex h-10 w-full items-center justify-center whitespace-nowrap rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground ring-offset-background transition-colors hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 !important;
+  }
 }

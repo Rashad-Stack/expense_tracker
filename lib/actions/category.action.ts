@@ -1,12 +1,12 @@
 "use sever";
 
-import { Category, Prisma, PrismaClient } from "@prisma/client";
+import prisma from "@/prisma/db";
+import { CreateCategoryParams } from "@/types";
+import { Category } from "@prisma/client";
 import { handleError } from "../utils";
 
-const prisma = new PrismaClient();
-
 export async function createCategory(
-  data: Prisma.CategoryCreateInput,
+  data: CreateCategoryParams,
 ): Promise<Category | void> {
   try {
     return await prisma.category.create({ data });

@@ -1,7 +1,7 @@
 "use server";
-import { Prisma, PrismaClient, User } from "@prisma/client";
+import prisma from "@/prisma/db";
+import { Prisma, User } from "@prisma/client";
 import { handleError } from "../utils";
-const prisma = new PrismaClient();
 
 export async function createUser(
   user: Prisma.UserCreateInput,
