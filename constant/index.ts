@@ -1,14 +1,14 @@
 export const menu = [
   {
     name: "Home",
-    path: "/",
+    path: "/dashboard",
   },
   {
     name: "Categories",
-    path: "/categories",
+    path: "/dashboard/categories",
   },
   {
     name: "Transactions",
-    path: "/transactions",
+    path: "/dashboard/transactions",
   },
 ];

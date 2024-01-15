@@ -4,11 +4,7 @@ import Menubar from "@/components/shared/Menubar";
 import Search from "@/components/shared/Search";
 import Sidebar from "@/components/shared/Sidebar";
 
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default function Layout({ children }: { children: React.ReactNode }) {
   return (
     <div className="wrapper grid min-h-screen grid-rows-[auto_1fr] gap-x-8 gap-y-2 md:grid-cols-[auto_1fr] lg:grid-cols-[auto_1fr_auto]">
       <Header />

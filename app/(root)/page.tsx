@@ -1,54 +1,60 @@
-import AddNewCategory from "@/components/shared/AddNewCategory";
-import AddNewTransaction from "@/components/shared/AddNewTransaction";
-import CategoryCard from "@/components/shared/CategoryCard";
-import TransactionCard from "@/components/shared/TransactionCard";
+import MobileMenu from "@/components/shared/MobileMenu";
+import { Button } from "@/components/ui/button";
+import Image from "next/image";
 import Link from "next/link";
 
 export default function Home() {
   return (
-    <>
-      <section className="grid grid-rows-[auto_1fr] gap-5">
-        <div className="space-y-8">
-          <div className="flex flex-wrap items-center justify-between gap-4">
-            <h1 className="text-lg font-bold">Categories</h1>
-            <div className="w-full sm:w-60 lg:hidden">
-              <AddNewCategory />
-            </div>
-          </div>
+    <div className="min-h-screen">
+      <header className="wrapper col-span-3 w-full">
+        <div className="flex h-full items-center justify-between py-3">
+          <Link href="/">
+            <Image
+              src="/assets/svg/logo-no-background.svg"
+              alt="logo"
+              width="120"
+              height="50"
+            />
+          </Link>
+          <div className="flex w-32 items-center justify-end gap-3">
+            <Button asChild size="lg">
+              <Link href="/sign-in">Login</Link>
+            </Button>
 
-          <div className="grid gap-2 sm:grid-cols-2">
-            <CategoryCard />
-            <CategoryCard />
-            <CategoryCard />
-            <CategoryCard />
+            {false && <MobileMenu />}
           </div>
         </div>
-      </section>
+      </header>
+      <main>
+        <section className="flex min-h-max items-center justify-center py-10">
+          <div className="wrapper grid items-center justify-items-center gap-8 lg:grid-cols-2">
+            <div className="order-2 space-y-4 md:order-1">
+              <h2 className="text-2xl font-extrabold !leading-relaxed md:text-4xl">
+                Track, Thrive, Transform <br /> Your Financial Journey Starts
+                Here.
+              </h2>
+              <p className="text-md max-w-md text-slate-500">
+                Smart Expense tracker analyzes your spending and automatically
+                saves the perfect amount everyday so you don&apos;t have to
+                think about it.
+              </p>
 
-      <section className="grid grid-rows-[auto_1fr] gap-5">
-        <div className="space-y-4">
-          <div className="flex flex-wrap items-center justify-between gap-4">
-            <h1 className="text-lg font-bold">Transactions</h1>
-            <div className="w-full sm:w-60 lg:hidden">
-              <AddNewTransaction />
+              <Button size="lg">
+                <Link href="/sign-up">Create an account</Link>
+              </Button>
+            </div>
+            <div className="order-1 md:order-2">
+              <Image
+                src="/assets/svg/undraw_transfer_money.svg"
+                alt="wallet"
+                width={1000}
+                height={1000}
+                className="max-w-xs object-cover object-center md:max-w-sm lg:max-w-xl"
+              />
             </div>
           </div>
-
-          <div className="flex justify-between">
-            <h2 className="text-base font-bold">Today</h2>
-            <Link href="/" className="text-sm">
-              View all
-            </Link>
-          </div>
-          <div className="flex flex-col gap-4">
-            <TransactionCard />
-            <TransactionCard />
-            <TransactionCard />
-            <TransactionCard />
-            <TransactionCard />
-          </div>
-        </div>
-      </section>
-    </>
+        </section>
+      </main>
+    </div>
   );
 }
