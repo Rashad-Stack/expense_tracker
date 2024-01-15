@@ -46,22 +46,21 @@ export async function POST(request: NextRequest) {
   }
 }
 
-export async function Get() {
+export async function GET(request: NextRequest) {
   const { sessionClaims } = auth();
   const userId = sessionClaims?.userId as string;
+  console.log("🚀 ---------------------------------------------🚀");
+  console.log("🚀 ~ file: route.ts:52 ~ Get ~ userId:", userId);
+  console.log("🚀 ---------------------------------------------🚀");
 
   try {
     const allCategoryByUser = await prisma.category.findMany({
       where: { userId },
     });
-    console.log("🚀 ~ Get ~ allCategoryByUser:", allCategoryByUser);
 
-    return NextResponse.json(
-      { allCategoryByUser },
-      {
-        status: statusCodes.OK,
-      },
-    );
+    return NextResponse.json(allCategoryByUser, {
+      status: statusCodes.OK,
+    });
   } catch (error) {
     console.log("🚀 ~ Get ~ error:", error);
 

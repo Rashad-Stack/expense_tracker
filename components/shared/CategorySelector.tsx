@@ -1,22 +1,16 @@
 "use client";
 
-import { Check, ChevronsUpDown } from "lucide-react";
 import * as React from "react";
 
-import { Button } from "@/components/ui/button";
 import {
-  Command,
-  CommandEmpty,
-  CommandGroup,
-  CommandInput,
-  CommandItem,
-} from "@/components/ui/command";
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover";
-import { cn } from "@/lib/utils";
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+
+import axios from "axios";
 
 type CategorySelectorProps = {
   newTransaction: any;
@@ -30,85 +24,52 @@ type CategorySelectorProps = {
   >;
 };
 
-const frameworks = [
-  {
-    value: "next.js",
-    label: "Next.js",
-  },
-  {
-    value: "sveltekit",
-    label: "SvelteKit",
-  },
-  {
-    value: "nuxt.js",
-    label: "Nuxt.js",
-  },
-  {
-    value: "remix",
-    label: "Remix",
-  },
-  {
-    value: "astro",
-    label: "Astro",
-  },
-];
+type ICategory = {
+  id: string;
+  name: string;
+};
 
 export default function CategorySelector({
   newTransaction,
   setTransaction,
 }: CategorySelectorProps) {
-  const [open, setOpen] = React.useState(false);
+  const [categories, setCategories] = React.useState<ICategory[]>([]);
   const [value, setValue] = React.useState("");
 
-  React.useEffect(() => {
+  function handleChange(value: string) {
     setTransaction({
       ...newTransaction,
       categoryId: value,
     });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [value]);
+    setValue(value);
+  }
+
+  React.useEffect(() => {
+    const getAllCategories = () => {
+      axios
+        .get("/api/categories")
+        .then((response) => {
+          setCategories(response.data);
+        })
+        .catch((error) => console.log(error));
+    };
+
+    getAllCategories();
+  }, []);
 
   return (
-    <Popover open={open} onOpenChange={setOpen}>
-      <PopoverTrigger asChild className="w-full">
-        <Button
-          variant="outline"
-          role="combobox"
-          aria-expanded={open}
-          className="justify-between"
-        >
-          {value
-            ? frameworks.find((framework) => framework.value === value)?.label
-            : "Select framework..."}
-          <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
-        </Button>
-      </PopoverTrigger>
-      <PopoverContent className="w-[200px] p-0">
-        <Command>
-          <CommandInput placeholder="Search framework..." />
-          <CommandEmpty>No framework found.</CommandEmpty>
-          <CommandGroup>
-            {frameworks.map((framework) => (
-              <CommandItem
-                key={framework.value}
-                value={framework.value}
-                onSelect={(currentValue: any) => {
-                  setValue(currentValue === value ? "" : currentValue);
-                  setOpen(false);
-                }}
-              >
-                <Check
-                  className={cn(
-                    "mr-2 h-4 w-4",
-                    value === framework.value ? "opacity-100" : "opacity-0",
-                  )}
-                />
-                {framework.label}
-              </CommandItem>
-            ))}
-          </CommandGroup>
-        </Command>
-      </PopoverContent>
-    </Popover>
+    <Select onValueChange={handleChange} defaultValue={value}>
+      <SelectTrigger className="w-full">
+        <SelectValue placeholder="Select Category" />
+      </SelectTrigger>
+      <SelectContent>
+        {categories.length > 0 &&
+          categories.map((category) => (
+            <SelectItem key={category.id} value={category.id}>
+              {category.name}
+            </SelectItem>
+          ))}
+      </SelectContent>
+    </Select>
   );
 }
