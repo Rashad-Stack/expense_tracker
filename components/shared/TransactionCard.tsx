@@ -3,6 +3,7 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
+import { formatDate } from "@/lib/utils";
 import { Transaction } from "@prisma/client";
 import DeleteTransaction from "./DeleteTransaction";
 import UpdateTransaction from "./UpdateTransaction";
@@ -34,7 +35,9 @@ export default function TransactionCard({ transaction }: TransactionCardProps) {
                 <p className="line-clamp-1 text-left text-sm font-bold">
                   {title}
                 </p>
-                <p className="text-left text-sm text-gray-500">01-04-2024</p>
+                <p className="text-left text-sm text-gray-500">
+                  {formatDate(date)}
+                </p>
                 <p className="text-left text-sm text-gray-500">
                   {category.name}
                 </p>

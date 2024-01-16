@@ -1,8 +1,26 @@
 import AddNewTransaction from "@/components/shared/AddNewTransaction";
 import Paginate from "@/components/shared/Paginate";
 import TransactionCard from "@/components/shared/TransactionCard";
+import prisma from "@/prisma/db";
+import { auth } from "@clerk/nextjs";
 
-export default function TransactionsPage() {
+export default async function TransactionsPage() {
+  const { sessionClaims } = auth();
+  const userId = sessionClaims?.userId as string;
+
+  const transactions = await prisma.transaction.findMany({
+    where: {
+      userId: userId,
+    },
+    include: {
+      category: {
+        select: {
+          name: true,
+        },
+      },
+    },
+  });
+
   return (
     <section className="grid grid-rows-[auto_1fr] gap-5">
       <div className="space-y-4">
@@ -14,11 +32,10 @@ export default function TransactionsPage() {
         </div>
 
         <div className="flex flex-col gap-4">
-          <TransactionCard />
-          <TransactionCard />
-          <TransactionCard />
-          <TransactionCard />
-          <TransactionCard />
+          {transactions.length > 0 &&
+            transactions.map((transaction) => (
+              <TransactionCard key={transaction.id} transaction={transaction} />
+            ))}
         </div>
       </div>
       <Paginate />

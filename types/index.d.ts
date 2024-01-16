@@ -22,3 +22,8 @@ export type CreateCategoryParams = {
 export type UpdateCategoryParams = {
   name: string;
 };
+
+export type SearchParamProps = {
+  params: { id: string };
+  searchParams: { [key: string]: string | string[] | undefined };
+};

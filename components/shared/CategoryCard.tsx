@@ -10,7 +10,7 @@ export default function CategoryCard({ category }: CategoryCardProps) {
   const { id, name } = category || {};
   return (
     <Link
-      href={`/categories/${id}`}
+      href={`/dashboard/categories/${id}`}
       className="group flex w-full items-center rounded-md bg-primary px-8 py-4 text-primary-foreground hover:bg-primary/90"
     >
       <div className="flex h-full w-16 items-center">
