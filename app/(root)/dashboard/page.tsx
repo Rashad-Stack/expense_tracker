@@ -2,6 +2,7 @@ import AddNewCategory from "@/components/shared/AddNewCategory";
 import AddNewTransaction from "@/components/shared/AddNewTransaction";
 import CategoryCard from "@/components/shared/CategoryCard";
 import TransactionCard from "@/components/shared/TransactionCard";
+import { getAllCategories } from "@/lib/actions/category.action";
 import prisma from "@/prisma/db";
 import { auth } from "@clerk/nextjs";
 import Link from "next/link";
@@ -10,15 +11,7 @@ export default async function Dashboard() {
   const { sessionClaims } = auth();
   const userId = sessionClaims?.userId as string;
 
-  const categories = await prisma.category.findMany({
-    where: {
-      userId: userId,
-    },
-    orderBy: {
-      createdAt: "desc",
-    },
-    take: 4,
-  });
+  const categories = (await getAllCategories({ take: 4 })) || [];
 
   const transactions = await prisma.transaction.findMany({
     where: {

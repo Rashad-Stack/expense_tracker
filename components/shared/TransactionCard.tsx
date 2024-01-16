@@ -45,7 +45,7 @@ export default function TransactionCard({ transaction }: TransactionCardProps) {
             </div>
             <div className="flex flex-col items-end">
               <p className="text-sm text-gray-500">Income</p>
-              <p className="text-sm font-bold">+${amount}</p>
+              <p className="text-sm font-bold">+${amount.toFixed(2)}</p>
               <span className="mt-2 h-1 w-full bg-green-500" />
             </div>
           </div>

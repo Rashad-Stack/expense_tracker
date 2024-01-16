@@ -1,18 +1,15 @@
 import AddNewCategory from "@/components/shared/AddNewCategory";
 import CategoryCard from "@/components/shared/CategoryCard";
 import Paginate from "@/components/shared/Paginate";
-import prisma from "@/prisma/db";
-import { auth } from "@clerk/nextjs";
+import { getAllCategories } from "@/lib/actions/category.action";
 
 export default async function CategoryPage() {
-  const { sessionClaims } = auth();
-  const userId = sessionClaims?.userId as string;
+  const categories = (await getAllCategories({})) || [];
 
-  const categories = await prisma.category.findMany({
-    where: {
-      userId,
-    },
-  });
+  console.log(
+    "🚀 ~ file: page.tsx:26 ~ CategoryPage ~ groupCategories:",
+    categories,
+  );
 
   return (
     <section className="grid grid-rows-[auto_1fr] gap-5">

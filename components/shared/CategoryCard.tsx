@@ -1,13 +1,13 @@
-import { Category } from "@prisma/client";
+import { ICategory } from "@/types";
 import Link from "next/link";
 import { HiArrowLongRight } from "react-icons/hi2";
 
 type CategoryCardProps = {
-  category: Category;
+  category: ICategory;
 };
 
 export default function CategoryCard({ category }: CategoryCardProps) {
-  const { id, name } = category || {};
+  const { id, name, totalAmount } = category || {};
   return (
     <Link
       href={`/dashboard/categories/${id}`}
@@ -20,7 +20,7 @@ export default function CategoryCard({ category }: CategoryCardProps) {
       </div>
       <div>
         <h3 className="capitalize">{name}</h3>
-        <p>$0.00</p>
+        <p>$ {totalAmount.toFixed(2)}</p>
       </div>
 
       <span className="ml-auto hidden group-hover:block">

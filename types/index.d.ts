@@ -27,3 +27,11 @@ export type SearchParamProps = {
   params: { id: string };
   searchParams: { [key: string]: string | string[] | undefined };
 };
+
+export type ICategory = Category & {
+  totalAmount: number;
+}
+
+export type GetCategoryParams = {
+  take?: number;
+}
