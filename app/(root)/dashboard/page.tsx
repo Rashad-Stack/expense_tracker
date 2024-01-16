@@ -2,9 +2,35 @@ import AddNewCategory from "@/components/shared/AddNewCategory";
 import AddNewTransaction from "@/components/shared/AddNewTransaction";
 import CategoryCard from "@/components/shared/CategoryCard";
 import TransactionCard from "@/components/shared/TransactionCard";
+import prisma from "@/prisma/db";
+import { auth } from "@clerk/nextjs";
 import Link from "next/link";
 
-export default function Dashboard() {
+export default async function Dashboard() {
+  const { sessionClaims } = auth();
+  const userId = sessionClaims?.userId as string;
+  const categories = await prisma.category.findMany({
+    where: {
+      userId: userId,
+    },
+
+    take: 4,
+  });
+
+  const transactions = await prisma.transaction.findMany({
+    where: {
+      userId: userId,
+    },
+    include: {
+      category: {
+        select: {
+          name: true,
+        },
+      },
+    },
+    take: 5,
+  });
+
   return (
     <>
       <section className="grid grid-rows-[auto_1fr] gap-5">
@@ -17,10 +43,10 @@ export default function Dashboard() {
           </div>
 
           <div className="grid gap-2 sm:grid-cols-2">
-            <CategoryCard />
-            <CategoryCard />
-            <CategoryCard />
-            <CategoryCard />
+            {categories.length > 0 &&
+              categories.map((category) => (
+                <CategoryCard key={category.id} category={category} />
+              ))}
           </div>
         </div>
       </section>
@@ -41,11 +67,13 @@ export default function Dashboard() {
             </Link>
           </div>
           <div className="flex flex-col gap-4">
-            <TransactionCard />
-            <TransactionCard />
-            <TransactionCard />
-            <TransactionCard />
-            <TransactionCard />
+            {transactions.length > 0 &&
+              transactions.map((transaction) => (
+                <TransactionCard
+                  key={transaction.id}
+                  transaction={transaction}
+                />
+              ))}
           </div>
         </div>
       </section>

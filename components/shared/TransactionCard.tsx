@@ -3,10 +3,22 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
+import { Transaction } from "@prisma/client";
 import DeleteTransaction from "./DeleteTransaction";
 import UpdateTransaction from "./UpdateTransaction";
 
-export default function TransactionCard() {
+interface ITransaction extends Transaction {
+  category: {
+    name: string;
+  };
+}
+
+type TransactionCardProps = {
+  transaction: ITransaction;
+};
+
+export default function TransactionCard({ transaction }: TransactionCardProps) {
+  const { id, title, amount, date, category } = transaction || {};
   return (
     <Popover>
       <PopoverTrigger>
@@ -14,19 +26,23 @@ export default function TransactionCard() {
           <div className="flex justify-between">
             <div className="flex gap-2">
               <div className="flex h-16 w-16 items-center justify-center rounded-md bg-primary">
-                <p className="text-4xl font-bold text-primary-foreground">B</p>
+                <p className="text-4xl font-bold text-primary-foreground">
+                  {category.name.charAt(0)}
+                </p>
               </div>
               <div>
                 <p className="line-clamp-1 text-left text-sm font-bold">
-                  Book Shop Book
+                  {title}
                 </p>
                 <p className="text-left text-sm text-gray-500">01-04-2024</p>
-                <p className="text-left text-sm text-gray-500">Book Shop</p>
+                <p className="text-left text-sm text-gray-500">
+                  {category.name}
+                </p>
               </div>
             </div>
             <div className="flex flex-col items-end">
               <p className="text-sm text-gray-500">Income</p>
-              <p className="text-sm font-bold">+$0.00</p>
+              <p className="text-sm font-bold">+${amount}</p>
               <span className="mt-2 h-1 w-full bg-green-500" />
             </div>
           </div>
