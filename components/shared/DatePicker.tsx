@@ -13,17 +13,11 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
+import { TransactionCreateDto } from "@/types";
 
 type DatePickerProps = {
-  newTransaction: any;
-  setTransaction: React.Dispatch<
-    React.SetStateAction<{
-      title: string;
-      date: string;
-      amount: string;
-      categoryId: string;
-    }>
-  >;
+  newTransaction: TransactionCreateDto;
+  setTransaction: React.Dispatch<React.SetStateAction<TransactionCreateDto>>;
 };
 
 export default function DatePicker({
@@ -36,7 +30,7 @@ export default function DatePicker({
     setDate(date);
     setTransaction({
       ...newTransaction,
-      date: date?.toISOString(),
+      date: date?.toISOString() || "",
     });
     return date;
   }

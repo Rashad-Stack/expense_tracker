@@ -1,13 +1,9 @@
 import prisma from "@/prisma/db";
+import { categorySchema } from "@/types/validator";
 import { auth } from "@clerk/nextjs";
 import statusCodes from "http-status-codes";
 import { revalidatePath } from "next/cache";
 import { NextRequest, NextResponse } from "next/server";
-import { z } from "zod";
-
-const categorySchema = z.object({
-  name: z.string().min(1, "Category is required!").max(255),
-});
 
 export async function POST(request: NextRequest) {
   const { sessionClaims } = auth();

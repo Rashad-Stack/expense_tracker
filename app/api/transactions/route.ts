@@ -1,18 +1,9 @@
 import prisma from "@/prisma/db";
+import { transactionSchema } from "@/types/validator";
 import { auth } from "@clerk/nextjs";
 import statusCodes from "http-status-codes";
 import { revalidatePath } from "next/cache";
 import { NextRequest, NextResponse } from "next/server";
-import { z } from "zod";
-
-const transactionSchema = z.object({
-  title: z.string().min(3).max(255),
-  date: z.string(),
-  amount: z.string(),
-  createdAt: z.date().optional(),
-  updatedAt: z.date().optional(),
-  categoryId: z.string(),
-});
 
 export async function POST(request: NextRequest) {
   const { sessionClaims } = auth();
@@ -37,12 +28,19 @@ export async function POST(request: NextRequest) {
       });
     }
 
+    const data = {
+      ...validation.data,
+      userId,
+      amount:
+        validation.data.spendType === "INCOME"
+          ? Math.abs(Number(validation.data.amount))
+          : Math.abs(Number(validation.data.amount)) * -1,
+    };
+
+    console.log(data);
+
     const newTransaction = await prisma.transaction.create({
-      data: {
-        ...validation.data,
-        userId,
-        amount: Number(validation.data.amount),
-      },
+      data,
     });
 
     revalidatePath("/dashboard");

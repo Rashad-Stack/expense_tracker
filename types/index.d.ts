@@ -1,3 +1,6 @@
+import { z } from "zod";
+import { categorySchema, transactionSchema } from "./validator";
+
 // ====== USER PARAMS
 export type CreateUserParams = {
   clerkId: string;
@@ -30,8 +33,14 @@ export type SearchParamProps = {
 
 export type ICategory = Category & {
   totalAmount: number;
-}
+};
 
 export type GetCategoryParams = {
   take?: number;
-}
+};
+
+export type CategoryCreateDto = z.infer<typeof categorySchema>;
+
+// ====== TRANSACTION PARAMS
+
+export type TransactionCreateDto = z.infer<typeof transactionSchema>;

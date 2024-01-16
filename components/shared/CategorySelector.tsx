@@ -10,23 +10,17 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 
+import { TransactionCreateDto } from "@/types";
 import axios from "axios";
-
-type CategorySelectorProps = {
-  newTransaction: any;
-  setTransaction: React.Dispatch<
-    React.SetStateAction<{
-      title: string;
-      date: string;
-      amount: string;
-      categoryId: string;
-    }>
-  >;
-};
 
 type ICategory = {
   id: string;
   name: string;
+};
+
+type CategorySelectorProps = {
+  newTransaction: TransactionCreateDto;
+  setTransaction: React.Dispatch<React.SetStateAction<TransactionCreateDto>>;
 };
 
 export default function CategorySelector({
@@ -34,7 +28,7 @@ export default function CategorySelector({
   setTransaction,
 }: CategorySelectorProps) {
   const [categories, setCategories] = React.useState<ICategory[]>([]);
-  const [value, setValue] = React.useState("");
+  const [value, setValue] = React.useState<string>("");
 
   function handleChange(value: string) {
     setTransaction({

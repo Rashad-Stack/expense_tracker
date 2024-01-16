@@ -11,6 +11,8 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { clientError } from "@/lib/utils";
+import { TransactionCreateDto } from "@/types";
+import { SpendType } from "@prisma/client";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
@@ -20,17 +22,20 @@ import { Button } from "../ui/button";
 import { Input } from "../ui/input";
 import CategorySelector from "./CategorySelector";
 import DatePicker from "./DatePicker";
+import SpendTypeSelector from "./SpendTypeSelector";
 
 const initialState = {
   title: "",
   date: "",
   amount: "",
   categoryId: "",
+  spendType: SpendType.INCOME,
 };
 
 export default function AddNewTransaction() {
-  const [newTransaction, setTransaction] = useState(initialState);
-  const { title, date, amount, categoryId } = newTransaction;
+  const [newTransaction, setTransaction] =
+    useState<TransactionCreateDto>(initialState);
+  const { title, date, amount, categoryId, spendType } = newTransaction;
   const router = useRouter();
 
   function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
@@ -41,12 +46,15 @@ export default function AddNewTransaction() {
   }
 
   function handleCreate() {
-    if (!date || !amount || !categoryId || !title)
+    if (!date || !amount || !categoryId || !title || !spendType)
       return toast.error("Please fill all fields");
 
     toast.promise(axios.post("/api/transactions", { ...newTransaction }), {
       loading: "Wait a moment",
       success: (data) => {
+        // Rest form
+        setTransaction(initialState);
+
         router.push("/dashboard");
         router.refresh();
         return `Successfully saved amount $ ${data.data.amount}`;
@@ -78,6 +86,11 @@ export default function AddNewTransaction() {
             name="amount"
             className="input-field"
             placeholder="Enter Amount"
+          />
+
+          <SpendTypeSelector
+            newTransaction={newTransaction}
+            setTransaction={setTransaction}
           />
 
           <DatePicker
