@@ -12,6 +12,7 @@ import {
 } from "@/components/ui/dialog";
 import { clientError } from "@/lib/utils";
 import axios from "axios";
+import { useRouter } from "next/navigation";
 import { startTransition, useState } from "react";
 import { HiMiniPlus } from "react-icons/hi2";
 import { toast } from "sonner";
@@ -20,6 +21,7 @@ import { Input } from "../ui/input";
 
 export default function AddNewCategory() {
   const [newCategory, setNewCategory] = useState<string>("");
+  const router = useRouter();
 
   function handleAddCategory() {
     if (!newCategory) {
@@ -29,7 +31,11 @@ export default function AddNewCategory() {
 
     toast.promise(axios.post("/api/categories", { name: newCategory }), {
       loading: "Wait a moment",
-      success: (data) => `Successfully saved ${data.data.name}`,
+      success: (data) => {
+        router.push("/dashboard");
+        router.refresh();
+        return `Successfully saved ${data.data.name}`;
+      },
       error: (error) => clientError(error.response.data),
     });
   }

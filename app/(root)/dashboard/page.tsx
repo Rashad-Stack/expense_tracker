@@ -9,11 +9,14 @@ import Link from "next/link";
 export default async function Dashboard() {
   const { sessionClaims } = auth();
   const userId = sessionClaims?.userId as string;
+
   const categories = await prisma.category.findMany({
     where: {
       userId: userId,
     },
-
+    orderBy: {
+      createdAt: "desc",
+    },
     take: 4,
   });
 
@@ -27,6 +30,9 @@ export default async function Dashboard() {
           name: true,
         },
       },
+    },
+    orderBy: {
+      createdAt: "desc",
     },
     take: 5,
   });

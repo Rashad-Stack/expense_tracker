@@ -1,6 +1,7 @@
 import prisma from "@/prisma/db";
 import { auth } from "@clerk/nextjs";
 import statusCodes from "http-status-codes";
+import { revalidatePath } from "next/cache";
 import { NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
 
@@ -38,6 +39,7 @@ export async function POST(request: NextRequest) {
       },
     });
 
+    revalidatePath("/dashboard");
     return NextResponse.json(newCategory, {
       status: statusCodes.CREATED,
     });

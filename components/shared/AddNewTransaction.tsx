@@ -12,6 +12,7 @@ import {
 } from "@/components/ui/dialog";
 import { clientError } from "@/lib/utils";
 import axios from "axios";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { HiMiniPlus } from "react-icons/hi2";
 import { toast } from "sonner";
@@ -30,6 +31,7 @@ const initialState = {
 export default function AddNewTransaction() {
   const [newTransaction, setTransaction] = useState(initialState);
   const { title, date, amount, categoryId } = newTransaction;
+  const router = useRouter();
 
   function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
     setTransaction({
@@ -44,7 +46,11 @@ export default function AddNewTransaction() {
 
     toast.promise(axios.post("/api/transactions", { ...newTransaction }), {
       loading: "Wait a moment",
-      success: (data) => `Successfully saved ${data.data.name}`,
+      success: (data) => {
+        router.push("/dashboard");
+        router.refresh();
+        return `Successfully saved amount $ ${data.data.amount}`;
+      },
       error: (error) => clientError(error.response.data),
     });
   }
