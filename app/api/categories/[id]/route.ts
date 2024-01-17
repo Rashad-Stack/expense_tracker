@@ -2,11 +2,10 @@ import prisma from "@/prisma/db";
 import { categorySchema } from "@/types/validator";
 import { auth } from "@clerk/nextjs";
 import { StatusCodes } from "http-status-codes";
-import { NextApiRequest } from "next";
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 
 export async function DELETE(
-  request: NextApiRequest,
+  request: NextRequest,
   { params }: { params: { id: string } },
 ) {
   try {
