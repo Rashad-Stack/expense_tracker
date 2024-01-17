@@ -4,9 +4,12 @@ import CategoryCard from "@/components/shared/CategoryCard";
 import TransactionCard from "@/components/shared/TransactionCard";
 import { getAllCategories } from "@/lib/actions/category.action";
 import { getAllTransaction } from "@/lib/actions/transaction.action";
+import { SearchParamProps } from "@/types";
 import Link from "next/link";
 
-export default async function Dashboard() {
+export default async function Dashboard({ searchParams }: SearchParamProps) {
+  const category = searchParams?.category as string;
+
   const categoryData = await getAllCategories({
     page: 1,
     limit: 4,
@@ -14,6 +17,7 @@ export default async function Dashboard() {
   const transactionData = await getAllTransaction({
     page: 1,
     limit: 4,
+    categoryId: category,
   });
 
   const { categories } = categoryData || {};

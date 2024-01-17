@@ -61,10 +61,12 @@ export async function getTransactionByCategory({
 type GetAllTransactionParams = {
   page: number;
   limit: number;
+  categoryId: string;
 };
 export async function getAllTransaction({
   page,
   limit,
+  categoryId,
 }: GetAllTransactionParams) {
   const { sessionClaims } = auth();
   const userId = sessionClaims?.userId as string;
@@ -76,6 +78,7 @@ export async function getAllTransaction({
       prisma.transaction.findMany({
         where: {
           userId: userId,
+          categoryId,
         },
         include: {
           category: {
@@ -94,6 +97,7 @@ export async function getAllTransaction({
       prisma.transaction.count({
         where: {
           userId: userId,
+          categoryId,
         },
       }),
     ]);
