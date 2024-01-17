@@ -62,7 +62,7 @@ export async function DELETE(
 }
 
 export async function PATCH(
-  request: NextResponse,
+  request: NextRequest,
   { params }: { params: { id: string } },
 ) {
   try {
