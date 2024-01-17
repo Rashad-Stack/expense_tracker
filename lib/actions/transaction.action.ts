@@ -8,12 +8,14 @@ type GetTransactionByCategoryParams = {
   categoryId: string;
   page: number;
   limit: number;
+  search: string;
 };
 
 export async function getTransactionByCategory({
   categoryId,
   page,
   limit,
+  search,
 }: GetTransactionByCategoryParams) {
   const { sessionClaims } = auth();
   const userId = sessionClaims?.userId as string;

@@ -8,10 +8,11 @@ export default async function TransactionsPage({
   searchParams,
 }: SearchParamProps) {
   const page = Number(searchParams?.page) || 1;
-
+  const category = searchParams?.category as string;
   const transactionData = await getAllTransaction({
     page,
     limit: 5,
+    categoryId: category,
   });
 
   const { transactions, totalPages } = transactionData || {};
