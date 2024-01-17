@@ -10,17 +10,50 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { useState } from "react";
+import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
 import { toast } from "sonner";
 import { Button } from "../ui/button";
 import { Input } from "../ui/input";
 
-export default function UpdateCategory() {
+export default function UpdateCategory({
+  categoryId,
+  categoryName,
+}: {
+  categoryId: string;
+  categoryName: string;
+}) {
   const [category, setCategory] = useState("");
+  const router = useRouter();
+
+  useEffect(() => {
+    setCategory(categoryName);
+  }, [categoryName]);
 
   function handleCreate() {
-    if (!category) return toast.error("Please enter a category name");
-    toast.success("Transaction added successfully");
+    if (!category) {
+      return toast.error("Please enter a category name");
+    }
+    if (!categoryId) {
+      toast.error("Invalid category id");
+      return;
+    }
+
+    const promise = fetch(`/api/categories/${categoryId}`, {
+      method: "PATCH",
+      body: JSON.stringify({ name: category }),
+    });
+
+    toast.promise(promise, {
+      loading: "Please wait",
+      success: () => {
+        router.refresh();
+        return "Category updated";
+      },
+      error: (error) => {
+        return "Failed to update!";
+      },
+    });
   }
   return (
     <Dialog>
@@ -32,7 +65,11 @@ export default function UpdateCategory() {
           <DialogTitle>Update Category</DialogTitle>
         </DialogHeader>
         <DialogDescription>
-          <Input />
+          <Input
+            type="text"
+            onChange={(e) => setCategory(e.target.value)}
+            value={category}
+          />
         </DialogDescription>
         <DialogFooter>
           <DialogClose asChild>

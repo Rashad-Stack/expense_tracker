@@ -1,4 +1,5 @@
 import AddNewCategory from "@/components/shared/AddNewCategory";
+import AlertMessage from "@/components/shared/AlertMessage";
 import CategoryCard from "@/components/shared/CategoryCard";
 import Paginate from "@/components/shared/Paginate";
 import { getAllCategories } from "@/lib/actions/category.action";
@@ -25,10 +26,13 @@ export default async function CategoryPage({ searchParams }: SearchParamProps) {
         </div>
 
         <div className="grid gap-2 sm:grid-cols-2">
-          {categories!.length > 0 &&
+          {categories!.length > 0 ? (
             categories?.map((category) => (
               <CategoryCard key={category.id} category={category} />
-            ))}
+            ))
+          ) : (
+            <AlertMessage />
+          )}
         </div>
       </div>
       {totalPages! > 1 && <Paginate page={page} totalPages={totalPages!} />}

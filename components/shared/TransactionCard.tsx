@@ -29,7 +29,7 @@ export default function TransactionCard({
           <div className="flex justify-between">
             <div className="flex gap-2">
               <div className="flex h-16 w-16 items-center justify-center rounded-md bg-primary">
-                <p className="text-4xl font-bold text-primary-foreground">
+                <p className="text-4xl font-bold uppercase text-primary-foreground">
                   {categoryName?.charAt(0)}
                 </p>
               </div>

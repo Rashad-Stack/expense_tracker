@@ -1,4 +1,5 @@
 import AddNewTransaction from "@/components/shared/AddNewTransaction";
+import AlertMessage from "@/components/shared/AlertMessage";
 import Paginate from "@/components/shared/Paginate";
 import TransactionCard from "@/components/shared/TransactionCard";
 import { getAllTransaction } from "@/lib/actions/transaction.action";
@@ -30,14 +31,17 @@ export default async function TransactionsPage({
         </div>
 
         <div className="flex flex-col gap-4">
-          {transactions!.length > 0 &&
+          {transactions!.length > 0 ? (
             transactions?.map((transaction) => (
               <TransactionCard
                 key={transaction.id}
                 transaction={transaction}
                 categoryName={transaction.category.name}
               />
-            ))}
+            ))
+          ) : (
+            <AlertMessage />
+          )}
         </div>
       </div>
       {totalPages! > 1 && <Paginate page={page} totalPages={totalPages!} />}

@@ -1,4 +1,6 @@
+import AlertMessage from "@/components/shared/AlertMessage";
 import DeleteCategory from "@/components/shared/DeleteCategory";
+import ErrorAlert from "@/components/shared/ErrorAlert";
 import Paginate from "@/components/shared/Paginate";
 import TransactionCard from "@/components/shared/TransactionCard";
 import UpdateCategory from "@/components/shared/UpdateCategory";
@@ -23,17 +25,29 @@ export default async function CategoryDetailsPage({
   const { category, totalTransactionAmount, transactions, totalPages } =
     categoryData || {};
 
+  if (!category) {
+    return (
+      <ErrorAlert
+        title="Category was not found!"
+        message="Please check the category id and try again."
+      />
+    );
+  }
+
   return (
     <section className="grid grid-rows-[auto_1fr] gap-5">
       <div className="space-y-4 rounded-md bg-slate-100 p-4">
         <div className="space-y-2">
-          <h2 className="text-lg font-bold">{category?.name}</h2>
+          <h2 className="text-lg font-bold capitalize">{category?.name}</h2>
           <h1 className="text-2xl font-bold">
             ${totalTransactionAmount?.toFixed(2)}
           </h1>
         </div>
         <div className="w-48 space-y-4">
-          <UpdateCategory />
+          <UpdateCategory
+            categoryId={categoryId}
+            categoryName={category!.name}
+          />
           <DeleteCategory id={categoryId} />
         </div>
       </div>
@@ -43,14 +57,17 @@ export default async function CategoryDetailsPage({
         </div>
 
         <div className="flex flex-col gap-4">
-          {transactions!.length > 0 &&
+          {transactions!.length > 0 ? (
             transactions?.map((transaction) => (
               <TransactionCard
                 key={transaction.id}
                 categoryName={category!.name}
                 transaction={transaction}
               />
-            ))}
+            ))
+          ) : (
+            <AlertMessage />
+          )}
         </div>
       </div>
 
