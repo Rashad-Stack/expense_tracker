@@ -9,19 +9,16 @@ import Link from "next/link";
 import DeleteTransaction from "./DeleteTransaction";
 import UpdateTransaction from "./UpdateTransaction";
 
-interface ITransaction extends Transaction {
-  category: {
-    name: string;
-  };
-}
-
 type TransactionCardProps = {
-  transaction: ITransaction;
+  transaction: Transaction;
+  categoryName: string;
 };
 
-export default function TransactionCard({ transaction }: TransactionCardProps) {
-  const { title, amount, date, category, spendType, categoryId } =
-    transaction || {};
+export default function TransactionCard({
+  transaction,
+  categoryName,
+}: TransactionCardProps) {
+  const { title, amount, date, spendType, categoryId } = transaction || {};
 
   const isIncome = spendType === "INCOME";
 
@@ -33,7 +30,7 @@ export default function TransactionCard({ transaction }: TransactionCardProps) {
             <div className="flex gap-2">
               <div className="flex h-16 w-16 items-center justify-center rounded-md bg-primary">
                 <p className="text-4xl font-bold text-primary-foreground">
-                  {category.name.charAt(0)}
+                  {categoryName?.charAt(0)}
                 </p>
               </div>
               <div>
@@ -47,7 +44,7 @@ export default function TransactionCard({ transaction }: TransactionCardProps) {
                   href={`/dashboard/categories/${categoryId}`}
                   className="block text-left text-sm text-gray-500 hover:text-primary"
                 >
-                  {category.name}
+                  {categoryName}
                 </Link>
               </div>
             </div>

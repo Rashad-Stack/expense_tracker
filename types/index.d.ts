@@ -22,6 +22,10 @@ export type CreateCategoryParams = {
   userId: string;
 };
 
+export type GetCategoryByIdParams = {
+  categoryId: string;
+};
+
 export type UpdateCategoryParams = {
   name: string;
 };

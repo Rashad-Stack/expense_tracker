@@ -69,6 +69,7 @@ export default async function Dashboard() {
             {transactions.length > 0 &&
               transactions.map((transaction) => (
                 <TransactionCard
+                  categoryName={transaction.category.name}
                   key={transaction.id}
                   transaction={transaction}
                 />

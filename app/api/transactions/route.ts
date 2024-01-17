@@ -37,8 +37,6 @@ export async function POST(request: NextRequest) {
           : Math.abs(Number(validation.data.amount)) * -1,
     };
 
-    console.log(data);
-
     const newTransaction = await prisma.transaction.create({
       data,
     });

@@ -86,6 +86,7 @@ export default function AddNewTransaction() {
             name="amount"
             className="input-field"
             placeholder="Enter Amount"
+            min={0}
           />
 
           <SpendTypeSelector

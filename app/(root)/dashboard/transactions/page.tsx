@@ -34,7 +34,11 @@ export default async function TransactionsPage() {
         <div className="flex flex-col gap-4">
           {transactions.length > 0 &&
             transactions.map((transaction) => (
-              <TransactionCard key={transaction.id} transaction={transaction} />
+              <TransactionCard
+                key={transaction.id}
+                transaction={transaction}
+                categoryName={transaction.category.name}
+              />
             ))}
         </div>
       </div>
