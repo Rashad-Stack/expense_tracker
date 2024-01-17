@@ -34,7 +34,7 @@ export default async function CategoryDetailsPage({
         </div>
         <div className="w-48 space-y-4">
           <UpdateCategory />
-          <DeleteCategory />
+          <DeleteCategory id={categoryId} />
         </div>
       </div>
       <div className="space-y-4">

@@ -10,12 +10,32 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
+import { useRouter } from "next/navigation";
+import { startTransition } from "react";
 import { toast } from "sonner";
 import { Button } from "../ui/button";
 
-export default function DeleteCategory() {
-  function handleCreate() {
-    toast.success("Transaction added successfully");
+export default function DeleteCategory({ id }: { id: string }) {
+  const router = useRouter();
+
+  function handleDelete() {
+    if (!id) {
+      toast.error("Invalid transaction id");
+      return;
+    }
+
+    const promise = fetch(`/api/categories/${id}`, {
+      method: "DELETE",
+    });
+
+    toast.promise(promise, {
+      loading: "Please wait",
+      success: () => {
+        router.refresh();
+        return "Category Deleted";
+      },
+      error: () => "Failed to delete!",
+    });
   }
 
   return (
@@ -32,7 +52,7 @@ export default function DeleteCategory() {
         </DialogDescription>
         <DialogFooter>
           <DialogClose asChild>
-            <Button onClick={handleCreate} type="submit">
+            <Button onClick={() => startTransition(handleDelete)} type="submit">
               OK
             </Button>
           </DialogClose>
