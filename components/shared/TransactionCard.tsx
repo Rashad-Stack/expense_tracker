@@ -18,7 +18,7 @@ export default function TransactionCard({
   transaction,
   categoryName,
 }: TransactionCardProps) {
-  const { title, amount, date, spendType, categoryId } = transaction || {};
+  const { id, title, amount, date, spendType, categoryId } = transaction || {};
 
   const isIncome = spendType === "INCOME";
 
@@ -64,7 +64,7 @@ export default function TransactionCard({
       </PopoverTrigger>
       <PopoverContent className="space-y-4">
         <UpdateTransaction />
-        <DeleteTransaction />
+        <DeleteTransaction id={id} />
       </PopoverContent>
     </Popover>
   );

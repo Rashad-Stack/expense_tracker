@@ -2,7 +2,6 @@ import prisma from "@/prisma/db";
 import { transactionSchema } from "@/types/validator";
 import { auth } from "@clerk/nextjs";
 import statusCodes from "http-status-codes";
-import { revalidatePath } from "next/cache";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(request: NextRequest) {
@@ -41,9 +40,10 @@ export async function POST(request: NextRequest) {
       data,
     });
 
-    revalidatePath("/dashboard");
     return NextResponse.json(newTransaction, {
       status: statusCodes.CREATED,
     });
-  } catch (error) {}
+  } catch (error) {
+    throw error;
+  }
 }
