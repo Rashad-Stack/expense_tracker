@@ -2,16 +2,17 @@
 
 import { formUrlQuery, removeKeysFromQuery } from "@/lib/utils";
 import { useRouter, useSearchParams } from "next/navigation";
+import { useEffect, useState } from "react";
 import { HiMagnifyingGlass } from "react-icons/hi2";
 import { Input } from "../ui/input";
 
 export default function Search() {
   const router = useRouter();
   const searchParams = useSearchParams();
+  const [query, setQuery] = useState("");
 
-  function onSearch(e: React.ChangeEvent<HTMLInputElement>) {
+  useEffect(() => {
     const delayDebounceFn = setTimeout(() => {
-      const query = e.target.value;
       let newUrl = "";
 
       if (query) {
@@ -28,10 +29,10 @@ export default function Search() {
       }
 
       router.push(newUrl, { scroll: false });
-    }, 500);
+    }, 300);
 
     return () => clearTimeout(delayDebounceFn);
-  }
+  }, [query, router, searchParams]);
 
   return (
     <div className="flex h-3 min-w-40 flex-1 items-center overflow-hidden border-b px-4 py-5">
@@ -39,7 +40,7 @@ export default function Search() {
       <Input
         className="border-0 outline-offset-0 placeholder:text-gray-500 focus:border-0 focus-visible:ring-0 focus-visible:ring-offset-0"
         placeholder="Search"
-        onChange={onSearch}
+        onChange={(e) => setQuery(e.target.value)}
       />
     </div>
   );

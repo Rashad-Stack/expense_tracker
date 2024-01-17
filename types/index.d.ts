@@ -26,6 +26,7 @@ export type GetCategoryByIdParams = {
   categoryId: string;
   limit: number;
   page: number;
+  search: string;
 };
 
 export type UpdateCategoryParams = {

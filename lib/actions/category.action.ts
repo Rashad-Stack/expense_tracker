@@ -79,6 +79,7 @@ export async function getCategoryById({
   categoryId,
   page,
   limit,
+  search,
 }: GetCategoryByIdParams) {
   const { sessionClaims } = auth();
   const userId = sessionClaims?.userId as string;
@@ -109,6 +110,9 @@ export async function getCategoryById({
           where: {
             userId: userId,
             categoryId: categoryId,
+            title: {
+              contains: search,
+            },
           },
           skip: skipAmount,
           take: limit,
@@ -118,6 +122,9 @@ export async function getCategoryById({
           where: {
             userId: userId,
             categoryId: categoryId,
+            title: {
+              contains: search,
+            },
           },
         }),
       ]);

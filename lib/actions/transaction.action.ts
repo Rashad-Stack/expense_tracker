@@ -64,11 +64,13 @@ type GetAllTransactionParams = {
   page: number;
   limit: number;
   categoryId: string;
+  search: string;
 };
 export async function getAllTransaction({
   page,
   limit,
   categoryId,
+  search,
 }: GetAllTransactionParams) {
   const { sessionClaims } = auth();
   const userId = sessionClaims?.userId as string;
@@ -81,6 +83,9 @@ export async function getAllTransaction({
         where: {
           userId: userId,
           categoryId,
+          title: {
+            contains: search,
+          },
         },
         include: {
           category: {
@@ -100,6 +105,9 @@ export async function getAllTransaction({
         where: {
           userId: userId,
           categoryId,
+          title: {
+            contains: search,
+          },
         },
       }),
     ]);

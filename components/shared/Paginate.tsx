@@ -3,7 +3,6 @@
 import {
   Pagination,
   PaginationContent,
-  PaginationEllipsis,
   PaginationItem,
 } from "@/components/ui/pagination";
 import { formUrlQuery } from "@/lib/utils";
@@ -67,9 +66,7 @@ export default function Paginate({
             </Button>
           </PaginationItem>
         ))}
-        <PaginationItem>
-          <PaginationEllipsis />
-        </PaginationItem>
+
         <PaginationItem>
           <Button
             size="sm"

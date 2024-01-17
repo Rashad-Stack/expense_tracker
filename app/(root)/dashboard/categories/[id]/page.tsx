@@ -11,8 +11,14 @@ export default async function CategoryDetailsPage({
 }: SearchParamProps) {
   const page = Number(searchParams?.page) || 1;
   const categoryId = params?.id as string;
+  const search = searchParams?.query as string;
 
-  const categoryData = await getCategoryById({ categoryId, limit: 5, page });
+  const categoryData = await getCategoryById({
+    categoryId,
+    limit: 5,
+    page,
+    search,
+  });
 
   const { category, totalTransactionAmount, transactions, totalPages } =
     categoryData || {};

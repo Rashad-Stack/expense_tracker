@@ -7,10 +7,12 @@ import { SearchParamProps } from "@/types";
 export default async function CategoryPage({ searchParams }: SearchParamProps) {
   const page = Number(searchParams?.page) || 1;
 
-  const { categories, totalPages } = await getAllCategories({
+  const categoryData = await getAllCategories({
     page,
     limit: 10,
   });
+
+  const { categories, totalPages } = categoryData || {};
 
   return (
     <section className="grid grid-rows-[auto_1fr] gap-5">
@@ -23,8 +25,8 @@ export default async function CategoryPage({ searchParams }: SearchParamProps) {
         </div>
 
         <div className="grid gap-2 sm:grid-cols-2">
-          {categories.length > 0 &&
-            categories.map((category) => (
+          {categories!.length > 0 &&
+            categories?.map((category) => (
               <CategoryCard key={category.id} category={category} />
             ))}
         </div>

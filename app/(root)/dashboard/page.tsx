@@ -9,6 +9,7 @@ import Link from "next/link";
 
 export default async function Dashboard({ searchParams }: SearchParamProps) {
   const category = searchParams?.category as string;
+  const search = searchParams?.query as string;
 
   const categoryData = await getAllCategories({
     page: 1,
@@ -18,6 +19,7 @@ export default async function Dashboard({ searchParams }: SearchParamProps) {
     page: 1,
     limit: 4,
     categoryId: category,
+    search,
   });
 
   const { categories } = categoryData || {};
