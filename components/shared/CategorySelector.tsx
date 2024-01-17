@@ -20,18 +20,20 @@ type ICategory = {
 
 type CategorySelectorProps = {
   newTransaction: TransactionCreateDto;
-  setTransaction: React.Dispatch<React.SetStateAction<TransactionCreateDto>>;
+  setNewTransaction: React.Dispatch<React.SetStateAction<TransactionCreateDto>>;
 };
 
 export default function CategorySelector({
   newTransaction,
-  setTransaction,
+  setNewTransaction,
 }: CategorySelectorProps) {
   const [categories, setCategories] = React.useState<ICategory[]>([]);
-  const [value, setValue] = React.useState<string>("");
+  const [value, setValue] = React.useState<string>(
+    newTransaction.categoryId || "",
+  );
 
   function handleChange(value: string) {
-    setTransaction({
+    setNewTransaction({
       ...newTransaction,
       categoryId: value,
     });

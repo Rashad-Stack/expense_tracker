@@ -1,5 +1,9 @@
 import { z } from "zod";
-import { categorySchema, transactionSchema } from "./validator";
+import {
+  categorySchema,
+  transactionPatchSchema,
+  transactionSchema,
+} from "./validator";
 
 // ====== USER PARAMS
 export type CreateUserParams = {
@@ -52,6 +56,7 @@ export type CategoryCreateDto = z.infer<typeof categorySchema>;
 // ====== TRANSACTION PARAMS
 
 export type TransactionCreateDto = z.infer<typeof transactionSchema>;
+export type TransactionUpdateDto = z.infer<typeof transactionPatchSchema>;
 
 // ====== URL QUERY PARAMS
 export type UrlQueryParams = {

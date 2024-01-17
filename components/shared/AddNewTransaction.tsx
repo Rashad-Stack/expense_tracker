@@ -33,13 +33,13 @@ const initialState = {
 };
 
 export default function AddNewTransaction() {
-  const [newTransaction, setTransaction] =
+  const [newTransaction, setNewTransaction] =
     useState<TransactionCreateDto>(initialState);
   const { title, date, amount, categoryId, spendType } = newTransaction;
   const router = useRouter();
 
   function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
-    setTransaction({
+    setNewTransaction({
       ...newTransaction,
       [e.target.name]: e.target.value,
     });
@@ -53,7 +53,7 @@ export default function AddNewTransaction() {
       loading: "Wait a moment",
       success: (data) => {
         // Rest form
-        setTransaction(initialState);
+        setNewTransaction(initialState);
 
         router.push("/dashboard");
         router.refresh();
@@ -76,6 +76,7 @@ export default function AddNewTransaction() {
           <Input
             type="text"
             onChange={handleChange}
+            value={title}
             name="title"
             className="input-field"
             placeholder="Enter Title"
@@ -83,6 +84,7 @@ export default function AddNewTransaction() {
           <Input
             type="number"
             onChange={handleChange}
+            value={amount}
             name="amount"
             className="input-field"
             placeholder="Enter Amount"
@@ -91,16 +93,16 @@ export default function AddNewTransaction() {
 
           <SpendTypeSelector
             newTransaction={newTransaction}
-            setTransaction={setTransaction}
+            setNewTransaction={setNewTransaction}
           />
 
           <DatePicker
             newTransaction={newTransaction}
-            setTransaction={setTransaction}
+            setNewTransaction={setNewTransaction}
           />
           <CategorySelector
             newTransaction={newTransaction}
-            setTransaction={setTransaction}
+            setNewTransaction={setNewTransaction}
           />
         </DialogDescription>
         <DialogFooter>

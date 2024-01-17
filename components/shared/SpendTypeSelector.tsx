@@ -11,17 +11,19 @@ import { TransactionCreateDto } from "@/types";
 
 type SpendTypeSelectorProps = {
   newTransaction: TransactionCreateDto;
-  setTransaction: React.Dispatch<React.SetStateAction<TransactionCreateDto>>;
+  setNewTransaction: React.Dispatch<React.SetStateAction<TransactionCreateDto>>;
 };
 
 export default function SpendTypeSelector({
   newTransaction,
-  setTransaction,
+  setNewTransaction,
 }: SpendTypeSelectorProps) {
-  const [value, setValue] = React.useState<string>("INCOME");
+  const [value, setValue] = React.useState<string>(
+    newTransaction.spendType || "INCOME",
+  );
 
   function handleChange(value: string) {
-    setTransaction({
+    setNewTransaction({
       ...newTransaction,
       categoryId: value,
       spendType: value as "INCOME" | "EXPENSE",

@@ -10,33 +10,116 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { useState } from "react";
+import { TransactionUpdateDto } from "@/types";
+import { Transaction } from "@prisma/client";
+import { useRouter } from "next/navigation";
+import { startTransition, useEffect, useState } from "react";
 import { toast } from "sonner";
 import { Button } from "../ui/button";
 import { Input } from "../ui/input";
+import CategorySelector from "./CategorySelector";
+import DatePicker from "./DatePicker";
+import SpendTypeSelector from "./SpendTypeSelector";
 
-export default function UpdateTransaction() {
-  const [category, setCategory] = useState("");
+export default function UpdateTransaction({
+  transaction,
+}: {
+  transaction: Transaction;
+}) {
+  const [newTransaction, setNewTransaction] = useState<TransactionUpdateDto>({
+    ...transaction,
+    date: transaction.date.toISOString(),
+    amount: transaction.amount.toString(),
+  });
+  const router = useRouter();
 
-  function handleCreate() {
-    if (!category) return toast.error("Please enter a category name");
-    toast.success("Transaction added successfully");
+  const { title, amount } = newTransaction;
+
+  function handleTransactionUpdate() {
+    if (!title || !amount) {
+      toast.error("Please fill all fields");
+
+      return;
+    }
+
+    const promise = fetch(`/api/transactions/${transaction.id}`, {
+      method: "PATCH",
+      body: JSON.stringify(newTransaction),
+    });
+
+    toast.promise(promise, {
+      loading: "Please wait",
+      success: () => {
+        router.refresh();
+        return "Transaction updated";
+      },
+      error: (error) => {
+        return "Failed to update!";
+      },
+    });
   }
+
+  function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
+    setNewTransaction({
+      ...newTransaction,
+      [e.target.name]: e.target.value,
+    });
+  }
+
+  useEffect(() => {
+    setNewTransaction({
+      ...transaction,
+      date: transaction.date.toISOString(),
+      amount: transaction.amount.toString(),
+    });
+  }, [setNewTransaction, transaction]);
+
   return (
     <Dialog>
-      <DialogTrigger className="inline-flex h-10 w-full items-center justify-center whitespace-nowrap rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground ring-offset-background transition-colors hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50">
-        Update
-      </DialogTrigger>
+      <DialogTrigger className="btn-modal-add">Update</DialogTrigger>
       <DialogContent>
         <DialogHeader>
           <DialogTitle>Update Transaction</DialogTitle>
         </DialogHeader>
-        <DialogDescription>
-          <Input />
+        <DialogDescription className="space-y-4">
+          <Input
+            type="text"
+            onChange={handleChange}
+            value={title}
+            name="title"
+            className="input-field"
+            placeholder="Enter Title"
+          />
+          <Input
+            type="number"
+            onChange={handleChange}
+            value={Math.abs(Number(amount))}
+            name="amount"
+            className="input-field"
+            placeholder="Enter Amount"
+            min={0}
+          />
+
+          <SpendTypeSelector
+            newTransaction={newTransaction}
+            setNewTransaction={setNewTransaction}
+          />
+
+          <DatePicker
+            newTransaction={newTransaction}
+            setNewTransaction={setNewTransaction}
+          />
+          <CategorySelector
+            newTransaction={newTransaction}
+            setNewTransaction={setNewTransaction}
+          />
         </DialogDescription>
         <DialogFooter>
           <DialogClose asChild>
-            <Button onClick={handleCreate} type="submit">
+            <Button
+              onClick={() => startTransition(handleTransactionUpdate)}
+              type="submit"
+            >
               Update
             </Button>
           </DialogClose>

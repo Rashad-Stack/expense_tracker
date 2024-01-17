@@ -63,7 +63,7 @@ export default function TransactionCard({
         </div>
       </PopoverTrigger>
       <PopoverContent className="space-y-4">
-        <UpdateTransaction />
+        <UpdateTransaction transaction={transaction} />
         <DeleteTransaction id={id} />
       </PopoverContent>
     </Popover>

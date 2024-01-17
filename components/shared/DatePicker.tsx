@@ -17,18 +17,20 @@ import { TransactionCreateDto } from "@/types";
 
 type DatePickerProps = {
   newTransaction: TransactionCreateDto;
-  setTransaction: React.Dispatch<React.SetStateAction<TransactionCreateDto>>;
+  setNewTransaction: React.Dispatch<React.SetStateAction<TransactionCreateDto>>;
 };
 
 export default function DatePicker({
   newTransaction,
-  setTransaction,
+  setNewTransaction,
 }: DatePickerProps) {
-  const [date, setDate] = React.useState<Date>();
+  const [date, setDate] = React.useState<Date | undefined>(
+    newTransaction.date ? new Date(newTransaction.date) : new Date(),
+  );
 
   function handelPickDate(date: Date | undefined) {
     setDate(date);
-    setTransaction({
+    setNewTransaction({
       ...newTransaction,
       date: date?.toISOString() || "",
     });

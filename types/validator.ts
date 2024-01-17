@@ -6,8 +6,14 @@ export const transactionSchema = z.object({
   date: z.string(),
   amount: z.string(),
   spendType: z.nativeEnum(SpendType),
-  createdAt: z.date().optional(),
-  updatedAt: z.date().optional(),
+  categoryId: z.string(),
+});
+
+export const transactionPatchSchema = z.object({
+  title: z.string().min(3).max(255),
+  date: z.string(),
+  amount: z.string(),
+  spendType: z.nativeEnum(SpendType),
   categoryId: z.string(),
 });
 
