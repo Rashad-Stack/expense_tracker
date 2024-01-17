@@ -24,6 +24,8 @@ export type CreateCategoryParams = {
 
 export type GetCategoryByIdParams = {
   categoryId: string;
+  limit: number;
+  page: number;
 };
 
 export type UpdateCategoryParams = {
@@ -40,7 +42,8 @@ export type ICategory = Category & {
 };
 
 export type GetCategoryParams = {
-  take?: number;
+  limit: number;
+  page: number;
 };
 
 export type CategoryCreateDto = z.infer<typeof categorySchema>;
@@ -48,3 +51,20 @@ export type CategoryCreateDto = z.infer<typeof categorySchema>;
 // ====== TRANSACTION PARAMS
 
 export type TransactionCreateDto = z.infer<typeof transactionSchema>;
+
+// ====== URL QUERY PARAMS
+export type UrlQueryParams = {
+  params: string;
+  key: string;
+  value: string | null;
+};
+
+export type RemoveUrlQueryParams = {
+  params: string;
+  keysToRemove: string[];
+};
+
+export type SearchParamProps = {
+  params: { id: string };
+  searchParams: { [key: string]: string | string[] | undefined };
+};

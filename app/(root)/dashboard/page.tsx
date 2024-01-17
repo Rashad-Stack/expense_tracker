@@ -3,32 +3,21 @@ import AddNewTransaction from "@/components/shared/AddNewTransaction";
 import CategoryCard from "@/components/shared/CategoryCard";
 import TransactionCard from "@/components/shared/TransactionCard";
 import { getAllCategories } from "@/lib/actions/category.action";
-import prisma from "@/prisma/db";
-import { auth } from "@clerk/nextjs";
+import { getAllTransaction } from "@/lib/actions/transaction.action";
 import Link from "next/link";
 
 export default async function Dashboard() {
-  const { sessionClaims } = auth();
-  const userId = sessionClaims?.userId as string;
-
-  const categories = (await getAllCategories({ take: 4 })) || [];
-
-  const transactions = await prisma.transaction.findMany({
-    where: {
-      userId: userId,
-    },
-    include: {
-      category: {
-        select: {
-          name: true,
-        },
-      },
-    },
-    orderBy: {
-      createdAt: "desc",
-    },
-    take: 5,
+  const categoryData = await getAllCategories({
+    page: 1,
+    limit: 4,
   });
+  const transactionData = await getAllTransaction({
+    page: 1,
+    limit: 4,
+  });
+
+  const { categories } = categoryData || {};
+  const { transactions } = transactionData || {};
 
   return (
     <>
@@ -42,8 +31,8 @@ export default async function Dashboard() {
           </div>
 
           <div className="grid gap-2 sm:grid-cols-2">
-            {categories.length > 0 &&
-              categories.map((category) => (
+            {categories!.length > 0 &&
+              categories?.map((category) => (
                 <CategoryCard key={category.id} category={category} />
               ))}
           </div>
@@ -60,14 +49,14 @@ export default async function Dashboard() {
           </div>
 
           <div className="flex justify-between">
-            <h2 className="text-base font-bold">Today</h2>
-            <Link href="/" className="text-sm">
+            <h2 className="text-base font-bold">Recent</h2>
+            <Link href="/dashboard/transactions" className="text-sm">
               View all
             </Link>
           </div>
           <div className="flex flex-col gap-4">
-            {transactions.length > 0 &&
-              transactions.map((transaction) => (
+            {transactions!.length > 0 &&
+              transactions?.map((transaction) => (
                 <TransactionCard
                   categoryName={transaction.category.name}
                   key={transaction.id}

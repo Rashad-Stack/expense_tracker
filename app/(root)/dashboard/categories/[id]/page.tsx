@@ -4,18 +4,18 @@ import TransactionCard from "@/components/shared/TransactionCard";
 import UpdateCategory from "@/components/shared/UpdateCategory";
 import { getCategoryById } from "@/lib/actions/category.action";
 import { SearchParamProps } from "@/types";
-import { auth } from "@clerk/nextjs";
 
 export default async function CategoryDetailsPage({
   params,
+  searchParams,
 }: SearchParamProps) {
-  const { sessionClaims } = auth();
-  const userId = sessionClaims?.userId as string;
+  const page = Number(searchParams?.page) || 1;
   const categoryId = params?.id as string;
 
-  const categoryData = await getCategoryById({ categoryId });
+  const categoryData = await getCategoryById({ categoryId, limit: 5, page });
 
-  const { category, totalTransactionAmount } = categoryData || {};
+  const { category, totalTransactionAmount, transactions, totalPages } =
+    categoryData || {};
 
   return (
     <section className="grid grid-rows-[auto_1fr] gap-5">
@@ -37,18 +37,18 @@ export default async function CategoryDetailsPage({
         </div>
 
         <div className="flex flex-col gap-4">
-          {category!.transactions.length > 0 &&
-            category?.transactions.map((transaction) => (
+          {transactions!.length > 0 &&
+            transactions?.map((transaction) => (
               <TransactionCard
                 key={transaction.id}
-                categoryName={category.name}
+                categoryName={category!.name}
                 transaction={transaction}
               />
             ))}
         </div>
       </div>
 
-      <Paginate />
+      {totalPages! > 1 && <Paginate page={page} totalPages={totalPages!} />}
     </section>
   );
 }

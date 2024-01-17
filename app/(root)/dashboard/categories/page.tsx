@@ -2,14 +2,15 @@ import AddNewCategory from "@/components/shared/AddNewCategory";
 import CategoryCard from "@/components/shared/CategoryCard";
 import Paginate from "@/components/shared/Paginate";
 import { getAllCategories } from "@/lib/actions/category.action";
+import { SearchParamProps } from "@/types";
 
-export default async function CategoryPage() {
-  const categories = (await getAllCategories({})) || [];
+export default async function CategoryPage({ searchParams }: SearchParamProps) {
+  const page = Number(searchParams?.page) || 1;
 
-  console.log(
-    "🚀 ~ file: page.tsx:26 ~ CategoryPage ~ groupCategories:",
-    categories,
-  );
+  const { categories, totalPages } = await getAllCategories({
+    page,
+    limit: 10,
+  });
 
   return (
     <section className="grid grid-rows-[auto_1fr] gap-5">
@@ -28,7 +29,7 @@ export default async function CategoryPage() {
             ))}
         </div>
       </div>
-      <Paginate />
+      {totalPages! > 1 && <Paginate page={page} totalPages={totalPages!} />}
     </section>
   );
 }
