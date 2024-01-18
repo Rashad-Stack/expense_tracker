@@ -1,6 +1,6 @@
 "use client";
 
-import { format } from "date-fns";
+import { format, formatISO } from "date-fns";
 import { Calendar as CalendarIcon } from "lucide-react";
 import * as React from "react";
 
@@ -32,7 +32,7 @@ export default function DatePicker({
     setDate(date);
     setNewTransaction({
       ...newTransaction,
-      date: date?.toISOString() || "",
+      date: formatISO(date!),
     });
     return date;
   }

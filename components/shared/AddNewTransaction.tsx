@@ -14,6 +14,7 @@ import { clientError } from "@/lib/utils";
 import { TransactionCreateDto } from "@/types";
 import { SpendType } from "@prisma/client";
 import axios from "axios";
+import { formatISO } from "date-fns";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { HiMiniPlus } from "react-icons/hi2";
@@ -26,7 +27,7 @@ import SpendTypeSelector from "./SpendTypeSelector";
 
 const initialState = {
   title: "",
-  date: "",
+  date: formatISO(new Date()),
   amount: "",
   categoryId: "",
   spendType: SpendType.INCOME,
