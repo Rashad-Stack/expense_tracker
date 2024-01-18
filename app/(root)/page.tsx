@@ -1,10 +1,15 @@
+import CookieConsent from "@/components/shared/CookieConsent";
 import MobileMenu from "@/components/shared/MobileMenu";
 import { Button } from "@/components/ui/button";
 import { SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
+import { cookies } from "next/headers";
 import Image from "next/image";
 import Link from "next/link";
 
 export default function Home() {
+  const cookiesList = cookies();
+  const hasCookie = cookiesList.has("smartExpenseTracker");
+
   return (
     <div className="min-h-screen">
       <header className="wrapper col-span-3 w-full">
@@ -66,6 +71,7 @@ export default function Home() {
             </div>
           </div>
         </section>
+        {!hasCookie && <CookieConsent />}
       </main>
     </div>
   );
