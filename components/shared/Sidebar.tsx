@@ -11,23 +11,17 @@ export default async function Sidebar() {
   return (
     <aside className="space-y-8 p-4 max-lg:hidden">
       <div className="flex flex-col items-center space-y-2 rounded-md bg-slate-100 p-4">
-        <Suspense fallback={<Skeleton className="h-10 w-10 rounded-full" />}>
-          <UserButton afterSignOutUrl="/" />
-        </Suspense>
-        <Suspense fallback={<Skeleton className="h-8 w-full rounded-md" />}>
-          <h2 className="text-sm font-semibold">Welcome {user?.firstName}</h2>
-        </Suspense>
+        <UserButton afterSignOutUrl="/" />
+        <h2 className="text-sm font-semibold">Welcome {user?.firstName}</h2>
       </div>
       <div className="space-y-2 rounded-md bg-slate-100 p-4">
-        <ExpenseSummery />
+        <Suspense fallback={<Skeleton className="h-10 w-full rounded-md" />}>
+          <ExpenseSummery />
+        </Suspense>
       </div>
       <div className="flex flex-col gap-4">
-        <Suspense fallback={<Skeleton className="h-10 w-full rounded-md" />}>
-          <AddNewCategory />
-        </Suspense>
-        <Suspense fallback={<Skeleton className="h-10 w-full rounded-md" />}>
-          <AddNewTransaction />
-        </Suspense>
+        <AddNewCategory />
+        <AddNewTransaction />
       </div>
     </aside>
   );

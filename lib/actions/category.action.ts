@@ -28,33 +28,43 @@ export async function getAllCategories({
   const skipAmount = (Number(page) - 1) * limit;
 
   try {
-    const [categories, groupCategories, totalCategory] = await Promise.all([
-      prisma.category.findMany({
-        where: {
-          userId,
-        },
-        orderBy: {
-          createdAt: "desc",
-        },
-        take: limit,
-        skip: skipAmount,
-      }),
-      prisma.transaction.groupBy({
-        by: ["categoryId"],
-        where: {
-          userId,
-        },
-        _sum: {
-          amount: true,
-        },
-      }),
+    const [categories, groupCategories, totalCategory, netAmount] =
+      await Promise.all([
+        prisma.category.findMany({
+          where: {
+            userId,
+          },
+          orderBy: {
+            createdAt: "desc",
+          },
+          take: limit,
+          skip: skipAmount,
+        }),
+        prisma.transaction.groupBy({
+          by: ["categoryId"],
+          where: {
+            userId,
+          },
+          _sum: {
+            amount: true,
+          },
+        }),
 
-      prisma.category.count({
-        where: {
-          userId,
-        },
-      }),
-    ]);
+        prisma.category.count({
+          where: {
+            userId,
+          },
+        }),
+
+        prisma.transaction.aggregate({
+          where: {
+            userId,
+          },
+          _sum: {
+            amount: true,
+          },
+        }),
+      ]);
 
     const categoryWithTotalAmount = categories.map((category: Category) => {
       const categorySum = groupCategories.find(
@@ -69,7 +79,11 @@ export async function getAllCategories({
 
     const totalPages = Math.ceil(totalCategory / limit);
 
-    return { categories: categoryWithTotalAmount, totalPages };
+    return {
+      categories: categoryWithTotalAmount,
+      totalPages,
+      netAmount: netAmount?._sum?.amount || 0,
+    };
   } catch (error) {
     handleError(error);
   }
