@@ -19,9 +19,6 @@ const armata = Armata({
 export const metadata: Metadata = {
   title: "Smart | Expense Tracker",
   description: "Track, Thrive, Transform: Your Financial Journey Starts Here.",
-  icons: {
-    icon: "/assets/png/logo-no-background.png",
-  },
 };
 
 export default function RootLayout({

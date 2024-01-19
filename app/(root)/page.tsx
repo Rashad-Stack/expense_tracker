@@ -16,6 +16,7 @@ export default async function Home() {
         <div className="flex h-full items-center justify-between py-3">
           <Link href="/">
             <Image
+              priority={true}
               src="/assets/svg/logo-no-background.svg"
               alt="logo"
               width="120"
@@ -62,6 +63,7 @@ export default async function Home() {
             </div>
             <div className="order-1 md:order-2">
               <Image
+                priority={true}
                 src="/assets/svg/undraw_transfer_money.svg"
                 alt="wallet"
                 width={1000}
