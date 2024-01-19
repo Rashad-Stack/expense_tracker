@@ -32,7 +32,7 @@ export default function DatePicker({
     setDate(date);
     setNewTransaction({
       ...newTransaction,
-      date: formatISO(date!),
+      date: formatISO(date || new Date()),
     });
     return date;
   }
