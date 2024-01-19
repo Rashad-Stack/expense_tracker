@@ -6,7 +6,7 @@ import { cookies } from "next/headers";
 import Image from "next/image";
 import Link from "next/link";
 
-export default function Home() {
+export default async function Home() {
   const cookiesList = cookies();
   const hasCookie = cookiesList.has("smartExpenseTracker");
 
