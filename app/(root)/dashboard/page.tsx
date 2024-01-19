@@ -6,6 +6,7 @@ import TransactionCard from "@/components/shared/TransactionCard";
 import { getAllCategories } from "@/lib/actions/category.action";
 import { getAllTransaction } from "@/lib/actions/transaction.action";
 import { SearchParamProps } from "@/types";
+import { intlFormatDistance } from "date-fns";
 import Link from "next/link";
 
 export default async function Dashboard({ searchParams }: SearchParamProps) {
@@ -25,6 +26,7 @@ export default async function Dashboard({ searchParams }: SearchParamProps) {
 
   const { categories } = categoryData || {};
   const { transactions } = transactionData || {};
+  const lastTransaction = transactions?.[0].date;
 
   return (
     <>
@@ -59,7 +61,13 @@ export default async function Dashboard({ searchParams }: SearchParamProps) {
             </div>
 
             <div className="flex justify-between">
-              <h2 className="text-base font-bold">Recent</h2>
+              <h2 className="text-base font-bold">
+                {intlFormatDistance(
+                  lastTransaction ? lastTransaction : new Date(),
+                  new Date(),
+                  { locale: "en" },
+                )}
+              </h2>
               <Link href="/dashboard/transactions" className="text-sm">
                 View all
               </Link>
