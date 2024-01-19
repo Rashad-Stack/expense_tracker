@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="DataSourceManagerImpl" format="xml" multifile-model="true">
-    <data-source source="LOCAL" name="smart_expense@localhost" uuid="58909aea-60fd-4906-ab38-ac4de6d2dd5c">
+    <data-source source="LOCAL" name="Development" uuid="58909aea-60fd-4906-ab38-ac4de6d2dd5c">
       <driver-ref>mongo</driver-ref>
       <synchronize>true</synchronize>
       <jdbc-driver>com.dbschema.MongoJdbcDriver</jdbc-driver>
       <jdbc-url>mongodb://localhost:27017</jdbc-url>
       <working-dir>$ProjectFileDir$</working-dir>
     </data-source>
-    <data-source source="LOCAL" name="smart_expense_tracker@cluster0.as0abeu.mongodb.net" uuid="5a05c480-ed89-417d-978a-b1bde728016b">
+    <data-source source="LOCAL" name="Production" uuid="1791e0bd-cdb9-4e46-b728-af5f8c426df9">
       <driver-ref>mongo</driver-ref>
       <synchronize>true</synchronize>
       <jdbc-driver>com.dbschema.MongoJdbcDriver</jdbc-driver>

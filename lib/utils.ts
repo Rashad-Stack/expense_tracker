@@ -1,16 +1,12 @@
 import { RemoveUrlQueryParams, UrlQueryParams } from "@/types";
+import { Prisma } from "@prisma/client";
 import { clsx, type ClassValue } from "clsx";
 import qs from "query-string";
 import { twMerge } from "tailwind-merge";
 import { ZodError } from "zod";
 
-export function cn(...inputs: ClassValue[]) {
-  return twMerge(clsx(inputs));
-}
-
-export const handleError = (error: unknown) => {
-  console.error("Debug: error: ", error);
-  throw new Error(typeof error === "string" ? error : JSON.stringify(error));
+const handlePrismErrors = (error: Prisma.PrismaClientKnownRequestError) => {
+  if (error.code === "P2023") throw Error("Invalid ID");
 };
 
 // Function to handle and join Zod validation errors into a single message
@@ -26,6 +22,14 @@ const handleZodValidationErrors = (error: ZodError): string => {
 
   // Return a generic error message for unexpected cases
   return "An unexpected validation error occurred.";
+};
+
+export function cn(...inputs: ClassValue[]) {
+  return twMerge(clsx(inputs));
+}
+
+export const handleError = (error: unknown) => {
+  console.error("Debug: error: ", error);
 };
 
 export const clientError = (error: Error) => {

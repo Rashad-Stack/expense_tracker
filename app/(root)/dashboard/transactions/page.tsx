@@ -31,7 +31,7 @@ export default async function TransactionsPage({
         </div>
 
         <div className="flex flex-col gap-4">
-          {transactions!.length > 0 ? (
+          {transactions && transactions.length > 0 ? (
             transactions?.map((transaction) => (
               <TransactionCard
                 key={transaction.id}

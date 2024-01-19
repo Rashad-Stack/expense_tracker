@@ -38,7 +38,7 @@ export default async function Dashboard({ searchParams }: SearchParamProps) {
           </div>
 
           <div className="grid gap-2 sm:grid-cols-2">
-            {categories!.length > 0 ? (
+            {categories && categories.length > 0 ? (
               categories?.map((category) => (
                 <CategoryCard key={category.id} category={category} />
               ))
@@ -48,7 +48,7 @@ export default async function Dashboard({ searchParams }: SearchParamProps) {
           </div>
         </div>
       </section>
-      {categories!.length > 0 && (
+      {categories && categories!.length > 0 && (
         <section className="grid grid-rows-[auto_1fr] gap-5">
           <div className="space-y-4">
             <div className="flex flex-wrap items-center justify-between gap-4">
@@ -65,7 +65,7 @@ export default async function Dashboard({ searchParams }: SearchParamProps) {
               </Link>
             </div>
             <div className="flex flex-col gap-4">
-              {transactions!.length > 0 ? (
+              {transactions && transactions.length > 0 ? (
                 transactions?.map((transaction) => (
                   <TransactionCard
                     categoryName={transaction.category.name}

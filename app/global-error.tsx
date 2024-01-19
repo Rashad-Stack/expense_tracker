@@ -1,6 +1,7 @@
 "use client";
 
-import ErrorMessage from "@/components/shared/ErrorMessage";
+import { Button } from "@/components/ui/button";
+import Image from "next/image";
 
 export default function GlobalError({
   error,
@@ -12,7 +13,41 @@ export default function GlobalError({
   return (
     <html>
       <body>
-        <ErrorMessage handleClick={() => reset()} />;
+        <div className="flex flex-col-reverse items-center justify-center gap-16 px-4 py-24 md:gap-28 md:px-44 md:py-20 lg:flex-row lg:px-24 lg:py-24">
+          <div className="relative w-full pb-12 lg:pb-0 xl:w-1/2 xl:pt-24">
+            <div className="relative">
+              <div className="absolute">
+                <div className="">
+                  <h1 className="my-2 text-2xl font-bold text-gray-800">
+                    Looks like you&apos;ve found the doorway to the great
+                    nothing
+                  </h1>
+                  <p className="my-2 text-gray-800">
+                    Sorry about that! Please visit our hompage to get where you
+                    need to go.
+                  </p>
+                  <Button onClick={() => reset()}>Try again</Button>
+                </div>
+              </div>
+              <div>
+                <Image
+                  src="/assets/png/404-2.png"
+                  width={1000}
+                  height={1000}
+                  alt="404 image"
+                />
+              </div>
+            </div>
+          </div>
+          <div>
+            <Image
+              src="/assets/png/Group.png"
+              width={1000}
+              height={1000}
+              alt="404 image"
+            />
+          </div>
+        </div>
       </body>
     </html>
   );

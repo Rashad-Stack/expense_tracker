@@ -2,7 +2,6 @@ import prisma from "@/prisma/db";
 import { categorySchema } from "@/types/validator";
 import { auth } from "@clerk/nextjs";
 import statusCodes from "http-status-codes";
-import { revalidatePath } from "next/cache";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(request: NextRequest) {
@@ -35,7 +34,6 @@ export async function POST(request: NextRequest) {
       },
     });
 
-    revalidatePath("/dashboard");
     return NextResponse.json(newCategory, {
       status: statusCodes.CREATED,
     });
@@ -45,10 +43,19 @@ export async function POST(request: NextRequest) {
 }
 
 export async function GET(request: NextRequest) {
-  const { sessionClaims } = auth();
-  const userId = sessionClaims?.userId as string;
-
   try {
+    const { sessionClaims } = auth();
+    const userId = sessionClaims?.userId as string;
+
+    if (!userId) {
+      return NextResponse.json(
+        { name: "custom", message: "Unauthorized" },
+        {
+          status: statusCodes.UNAUTHORIZED,
+        },
+      );
+    }
+
     const allCategoryByUser = await prisma.category.findMany({
       where: { userId },
     });
@@ -57,8 +64,6 @@ export async function GET(request: NextRequest) {
       status: statusCodes.OK,
     });
   } catch (error) {
-    console.log("🚀 ~ Get ~ error:", error);
-
     throw error;
   }
 }

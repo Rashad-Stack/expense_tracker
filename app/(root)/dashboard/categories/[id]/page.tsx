@@ -28,8 +28,8 @@ export default async function CategoryDetailsPage({
   if (!category) {
     return (
       <ErrorAlert
-        title="Category was not found!"
-        message="Please check the category id and try again."
+        title="Invalid category ID"
+        message="This category is no longer exist!"
       />
     );
   }
@@ -46,7 +46,7 @@ export default async function CategoryDetailsPage({
         <div className="w-48 space-y-4">
           <UpdateCategory
             categoryId={categoryId}
-            categoryName={category!.name}
+            categoryName={category?.name}
           />
           <DeleteCategory id={categoryId} />
         </div>
@@ -57,7 +57,7 @@ export default async function CategoryDetailsPage({
         </div>
 
         <div className="flex flex-col gap-4">
-          {transactions!.length > 0 ? (
+          {transactions && transactions?.length > 0 ? (
             transactions?.map((transaction) => (
               <TransactionCard
                 key={transaction.id}

@@ -26,7 +26,7 @@ export default async function CategoryPage({ searchParams }: SearchParamProps) {
         </div>
 
         <div className="grid gap-2 sm:grid-cols-2">
-          {categories!.length > 0 ? (
+          {categories && categories.length > 0 ? (
             categories?.map((category) => (
               <CategoryCard key={category.id} category={category} />
             ))
