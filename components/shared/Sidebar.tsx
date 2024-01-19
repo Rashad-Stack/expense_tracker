@@ -3,13 +3,14 @@ import { Suspense } from "react";
 import { Skeleton } from "../ui/skeleton";
 import AddNewCategory from "./AddNewCategory";
 import AddNewTransaction from "./AddNewTransaction";
+import ExpenseChart from "./ExpenseChart";
 import ExpenseSummery from "./ExpenseSummery";
 
 export default async function Sidebar() {
   const user = await currentUser();
 
   return (
-    <aside className="space-y-8 p-4 max-lg:hidden">
+    <aside className="space-y-6 p-4 max-lg:hidden">
       <div className="flex flex-col items-center space-y-2 rounded-md bg-slate-100 p-4">
         <UserButton afterSignOutUrl="/" />
         <h2 className="text-sm font-semibold">Welcome {user?.firstName}</h2>
@@ -17,6 +18,16 @@ export default async function Sidebar() {
       <div className="space-y-2 rounded-md bg-slate-100 p-4">
         <Suspense fallback={<Skeleton className="h-10 w-full rounded-md" />}>
           <ExpenseSummery />
+        </Suspense>
+      </div>
+      <div className="space-y-2 rounded-md bg-slate-100 p-4">
+        <Suspense fallback={<Skeleton className="h-10 w-full rounded-md" />}>
+          <ExpenseChart />
+        </Suspense>
+      </div>
+      <div className="space-y-2 rounded-md bg-slate-100 p-4">
+        <Suspense fallback={<Skeleton className="h-10 w-full rounded-md" />}>
+          <ExpenseChart />
         </Suspense>
       </div>
       <div className="flex flex-col gap-4">
