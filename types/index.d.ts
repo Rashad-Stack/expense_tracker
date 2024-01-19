@@ -57,6 +57,12 @@ export type CategoryCreateDto = z.infer<typeof categorySchema>;
 
 export type TransactionCreateDto = z.infer<typeof transactionSchema>;
 export type TransactionUpdateDto = z.infer<typeof transactionPatchSchema>;
+export type GetAllTransactionParams = {
+  page: number;
+  limit: number;
+  categoryId: string;
+  search: string;
+};
 
 // ====== URL QUERY PARAMS
 export type UrlQueryParams = {

@@ -12,3 +12,10 @@ export const menu = [
     path: "/dashboard/transactions",
   },
 ];
+
+export const analysisFilterBy = [
+  {
+    title: "Monthly",
+    value: "",
+  },
+];

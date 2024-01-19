@@ -1,6 +1,7 @@
 "use server";
 
 import prisma from "@/prisma/db";
+import { GetAllTransactionParams } from "@/types";
 import { auth } from "@clerk/nextjs";
 import { handleError } from "../utils";
 
@@ -60,12 +61,6 @@ export async function getTransactionByCategory({
   }
 }
 
-type GetAllTransactionParams = {
-  page: number;
-  limit: number;
-  categoryId: string;
-  search: string;
-};
 export async function getAllTransaction({
   page,
   limit,
@@ -117,6 +112,51 @@ export async function getAllTransaction({
     return {
       transactions,
       totalPages: pages,
+    };
+  } catch (error) {
+    handleError(error);
+  }
+}
+
+export async function getTransactionAnalysis() {
+  try {
+    const { sessionClaims } = auth();
+    const userId = sessionClaims?.userId as string;
+
+    const [totalIncome, totalExpense] = await Promise.all([
+      prisma.transaction.findMany({
+        where: {
+          userId: userId,
+          spendType: "INCOME",
+        },
+        select: {
+          id: true,
+          amount: true,
+          title: true,
+        },
+      }),
+
+      prisma.transaction.findMany({
+        where: {
+          userId: userId,
+          spendType: "EXPENSE",
+        },
+        select: {
+          id: true,
+          amount: true,
+          title: true,
+        },
+      }),
+    ]);
+
+    const refactoredIncome = totalExpense.map((income) => ({
+      ...income,
+      amount: Math.abs(income.amount || 0),
+    }));
+
+    return {
+      totalIncome,
+      totalExpense: refactoredIncome,
     };
   } catch (error) {
     handleError(error);
