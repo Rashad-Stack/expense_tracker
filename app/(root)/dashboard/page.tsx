@@ -26,7 +26,7 @@ export default async function Dashboard({ searchParams }: SearchParamProps) {
 
   const { categories } = categoryData || {};
   const { transactions } = transactionData || {};
-  const lastTransaction = transactions?.[0].date;
+  const lastTransaction = transactions?.[0]?.date;
 
   return (
     <>
