@@ -61,7 +61,7 @@ export default async function Dashboard({ searchParams }: SearchParamProps) {
             </div>
 
             <div className="flex justify-between">
-              <h2 className="text-base font-bold">
+              <h2 className="text-base font-bold capitalize">
                 {intlFormatDistance(
                   lastTransaction ? lastTransaction : new Date(),
                   new Date(),
