@@ -27,6 +27,33 @@ export async function POST(request: NextRequest) {
       });
     }
 
+    const totalBalance = await prisma.transaction.aggregate({
+      where: {
+        userId,
+        categoryId: validation.data.categoryId,
+      },
+      _sum: {
+        amount: true,
+      },
+    });
+
+    const balance = totalBalance._sum.amount || 0;
+
+    if (
+      validation.data.spendType === "EXPENSE" &&
+      balance <= Math.abs(Number(validation.data.amount))
+    ) {
+      return NextResponse.json(
+        {
+          name: "custom",
+          message: "You can't deposit more than your balance",
+        },
+        {
+          status: statusCodes.BAD_REQUEST,
+        },
+      );
+    }
+
     const data = {
       ...validation.data,
       userId,
