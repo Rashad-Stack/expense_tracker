@@ -29,7 +29,7 @@ model Category {
   createdAt    DateTime      @default(now())
   updatedAt    DateTime      @updatedAt
   transactions Transaction[]
-  user         User          @relation(fields: [userId], references: [id])
+  user         User          @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId       String        @db.ObjectId
 }
 
@@ -41,9 +41,9 @@ model Transaction {
   spendType  SpendType
   createdAt  DateTime  @default(now())
   updatedAt  DateTime  @updatedAt
-  category   Category  @relation(fields: [categoryId], references: [id])
+  category   Category  @relation(fields: [categoryId], references: [id], onDelete: Cascade)
   categoryId String    @db.ObjectId
-  user       User      @relation(fields: [userId], references: [id])
+  user       User      @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId     String    @db.ObjectId
 }
 

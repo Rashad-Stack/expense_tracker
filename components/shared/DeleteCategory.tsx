@@ -31,6 +31,7 @@ export default function DeleteCategory({ id }: { id: string }) {
     toast.promise(promise, {
       loading: "Please wait",
       success: () => {
+        router.back();
         router.refresh();
         return "Category Deleted";
       },
